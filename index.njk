@@ -1,0 +1,224 @@
+---
+layout: base.njk
+esInicio: true
+---
+{%- from "macros.njk" import dib, ficha, renglon, pub, encabezado, vacio, boton, tituloPartido -%}
+{%- set h = contenido.paginas.home -%}
+{%- set sec = contenido.paginas.secciones -%}
+
+{# ================================================================ 1. HERO #}
+<section class="hero" aria-labelledby="hero-titulo">
+  <div class="contenedor hero__grilla">
+    <div>
+      <h1 id="hero-titulo" class="hero__logo">
+        <img src="/assets/img/marca/logo-horizontal.svg" alt="ADNCognitivo" width="860" height="200">
+      </h1>
+      <p class="hero__tagline rotulo">{{ h.hero_etiqueta }}</p>
+      <p class="hero__texto">{{ h.hero_texto }}</p>
+      <svg class="hero__barra" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true" fill="currentColor"><use href="#d-subrayado"/></svg>
+      <div class="hero__botones">
+        <a class="boton" href="{{ h.boton_1_url }}">{{ h.boton_1_texto }}</a>
+        <a class="boton boton--contorno" href="{{ h.boton_2_url }}">{{ h.boton_2_texto }}</a>
+      </div>
+    </div>
+    <div class="hero__lateral">
+      <div class="hero__stickers" aria-label="Ejes">
+        <span class="sticker">Cognición</span>
+        <span class="sticker sticker--contorno">Desarrollo</span>
+        <span class="sticker">Aprendizaje</span>
+      </div>
+    </div>
+    {% if h.hero_nota %}
+    <div class="hero__nota" aria-hidden="true">
+      <p class="mano">{{ h.hero_nota }}</p>
+      {{ dib("flecha-curva") }}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{# ========================================================= 2. IDEA CENTRAL #}
+<section class="seccion" aria-labelledby="idea-titulo">
+  <div class="contenedor">
+    <div class="idea">
+      {%- set palabras = h.idea_titulo.split(" ") %}
+      <h2 id="idea-titulo" class="idea__titulo">
+        {%- for w in palabras %}
+        <span class="{{ 'liviano' if loop.index == 2 }}">{% if loop.last %}<span class="subrayar" style="display:inline-block">{{ w }}</span>{% else %}{{ w }}{% endif %}</span>
+        {%- endfor %}
+      </h2>
+      <div class="idea__texto">
+        <p class="lead">{{ h.idea_texto }}</p>
+        <p class="mano" aria-hidden="true">{{ dib("asterisco") }} basado en evidencia</p>
+      </div>
+    </div>
+
+    <nav class="areas" aria-label="Grandes áreas">
+      {%- for a in h.areas %}
+      <a class="area" href="{{ a.url }}">
+        {{ dib("area-" + a.icono, "area__dib") }}
+        <span class="area__cuerpo">
+          <span class="area__titulo">{{ a.titulo }}</span>
+          <span class="area__texto" style="display:block">{{ a.texto }}</span>
+        </span>
+        <span class="area__ir" aria-hidden="true">{{ dib("flecha") }}</span>
+      </a>
+      {%- endfor %}
+    </nav>
+  </div>
+</section>
+
+{# ============================================================ 3. FORMACIÓN #}
+<section class="seccion" aria-labelledby="formacion-titulo">
+  <div class="contenedor">
+    <header class="encabezado">
+      <span class="encabezado__num" aria-hidden="true">01</span>
+      <div>
+        <h2 class="encabezado__titulo" id="formacion-titulo">{{ sec.formacion.titulo }}</h2>
+        <p class="encabezado__bajada">{{ sec.formacion.bajada }}</p>
+      </div>
+      <a class="enlace-flecha encabezado__accion" href="/formacion/"><span>Ver toda la formación</span>{{ dib("flecha") }}</a>
+    </header>
+    {%- set lista = contenido.formacion | selectattr("destacado") %}
+    {%- if not lista.length %}{% set lista = contenido.formacion %}{% endif %}
+    {%- if lista.length %}
+    <div class="fichas fichas--dos">
+      {%- for p in lista.slice(0, 4) %}{{ ficha(p, "marco" if loop.index is odd else "marco marco--2") }}{% endfor %}
+    </div>
+    {%- else %}
+    {{ vacio("Pronto vas a encontrar acá cursos y masterclasses.") }}
+    {%- endif %}
+  </div>
+</section>
+
+{# =========================================================== 4. MATERIALES #}
+<section class="seccion seccion--gris" aria-labelledby="materiales-titulo">
+  <div class="contenedor">
+    <header class="encabezado">
+      <span class="encabezado__num" aria-hidden="true">02</span>
+      <div>
+        <h2 class="encabezado__titulo" id="materiales-titulo">{{ sec.materiales.titulo }}</h2>
+        <p class="encabezado__bajada">{{ sec.materiales.bajada }}</p>
+      </div>
+      <a class="enlace-flecha encabezado__accion" href="/materiales/"><span>Ver materiales</span>{{ dib("flecha") }}</a>
+    </header>
+    {%- set lista = contenido.materiales | selectattr("destacado") %}
+    {%- if not lista.length %}{% set lista = contenido.materiales %}{% endif %}
+    {%- if lista.length %}
+    <ul class="renglones">
+      {%- for p in lista.slice(0, 5) %}{{ renglon(p) }}{% endfor %}
+    </ul>
+    {%- else %}
+    {{ vacio("Los materiales se están preparando.", "", "area-materiales") }}
+    {%- endif %}
+  </div>
+</section>
+
+{# ========================================================= 5. EXPERIENCIAS #}
+<section class="seccion seccion--oscura" aria-labelledby="experiencias-titulo">
+  <div class="contenedor">
+    <header class="encabezado">
+      <span class="encabezado__num" aria-hidden="true">03</span>
+      <div>
+        <h2 class="encabezado__titulo" id="experiencias-titulo">{{ sec.experiencias.titulo }}</h2>
+        <p class="encabezado__bajada">{{ sec.experiencias.bajada }}</p>
+      </div>
+      <a class="enlace-flecha encabezado__accion" href="/experiencias/"><span>Todas las experiencias</span>{{ dib("flecha") }}</a>
+    </header>
+    {%- set e = (contenido.experiencias | selectattr("destacado") | first) or (contenido.experiencias | first) %}
+    {%- if e %}
+    <article class="experiencia-destacada">
+      <div class="experiencia-destacada__visual marco marco--claro">
+        {%- if e.imagen %}
+        <img src="{{ e.imagen }}" alt="{{ e.imagen_alt }}" loading="lazy">
+        {%- else %}
+        {%- set pal = e.titulo.split(", ") %}
+        <div class="tres-palabras" aria-hidden="true">
+          {% for w in e.titulo.replace(" y ", ", ").split(", ") %}<span>{{ w }}</span>{% endfor %}
+        </div>
+        {%- endif %}
+      </div>
+      <div>
+        <div class="fila-acciones" style="margin-bottom:1.25rem">
+          {% for t in e.tema %}<span class="sticker sticker--claro sticker--recto" style="background:var(--papel);color:var(--tinta)">{{ t }}</span>{% endfor %}
+          {% if e.categoria %}<span class="sticker sticker--teal sticker--der">{{ e.categoria }}</span>{% endif %}
+        </div>
+        <h3 class="experiencia-destacada__titulo">{{ e.titulo }}</h3>
+        <p class="experiencia-destacada__desc">{{ e.descripcion }}</p>
+        <div class="experiencia-destacada__acciones">
+          {{ boton(e.accion, "boton--claro") }}
+          <a class="enlace-flecha" href="{{ e.url }}"><span>Más información</span>{{ dib("flecha") }}</a>
+        </div>
+      </div>
+    </article>
+    {%- else %}
+    <p class="lead">Las experiencias interactivas se van a reunir en este espacio.</p>
+    {%- endif %}
+  </div>
+</section>
+
+{# ======================================================== 6. PUBLICACIONES #}
+<section class="seccion" aria-labelledby="publicaciones-titulo">
+  <div class="contenedor">
+    <header class="encabezado">
+      <span class="encabezado__num" aria-hidden="true">04</span>
+      <div>
+        <h2 class="encabezado__titulo" id="publicaciones-titulo">{{ sec.publicaciones.titulo }}</h2>
+        <p class="encabezado__bajada">{{ sec.publicaciones.bajada }}</p>
+      </div>
+    </header>
+    <nav class="subcats" aria-label="Tipos de publicación">
+      {%- for clave, def in contenido.tiposPublicacion %}
+      <a class="subcat" href="{{ def.ruta }}"><span class="subcat__nombre">{{ def.plural }}</span><span class="subcat__num">{{ contenido.publicacionesPorTipo[clave].length }}</span></a>
+      {%- endfor %}
+    </nav>
+    {%- if contenido.publicaciones.length %}
+    <ul class="pub-lista">
+      {%- set pubs = contenido.publicaciones | selectattr("destacado") %}
+      {%- if not pubs.length %}{% set pubs = contenido.publicaciones %}{% endif %}
+      {%- for p in pubs.slice(0, 4) %}{{ pub(p) }}{% endfor %}
+    </ul>
+    {%- else %}
+    {{ vacio("Estamos incorporando nuestra producción científica.", "Libros, capítulos y artículos se van a publicar en esta sección a medida que los carguemos.", "area-publicaciones") }}
+    {%- endif %}
+    <p class="mt-3"><a class="boton boton--contorno" href="/publicaciones/">Ver todas las publicaciones</a></p>
+  </div>
+</section>
+
+{# ==================================================== 7. RECURSOS GRATUITOS #}
+<section class="seccion seccion--gris" aria-labelledby="recursos-titulo">
+  <div class="contenedor dos-col">
+    <header>
+      <span class="encabezado__num" aria-hidden="true" style="display:inline-block;margin-bottom:1rem">05</span>
+      <h2 class="encabezado__titulo" id="recursos-titulo">{{ sec.recursos.titulo }}</h2>
+      <p class="encabezado__bajada">{{ sec.recursos.bajada }}</p>
+      <p class="mt-2"><a class="enlace-flecha" href="/recursos-gratuitos/"><span>Ir a recursos gratuitos</span>{{ dib("flecha") }}</a></p>
+    </header>
+    <div>
+      {%- set gratis = contenido.recursos %}
+      {%- if not gratis.length %}{% set gratis = contenido.productos | selectattr("gratuito") %}{% endif %}
+      {%- if gratis.length %}
+      <ul class="renglones">{% for p in gratis.slice(0, 4) %}{{ renglon(p) }}{% endfor %}</ul>
+      {%- else %}
+      {{ vacio("Todavía no hay recursos gratuitos publicados.", "", "area-recursos") }}
+      {%- endif %}
+    </div>
+  </div>
+</section>
+
+{# ========================================================= 8. QUIÉNES SOMOS #}
+<section class="seccion" aria-labelledby="quienes-titulo">
+  <div class="contenedor dos-col">
+    <div>
+      <h2 class="encabezado__titulo" id="quienes-titulo">{{ h.quienes_titulo }}</h2>
+      <svg class="dib gira-1" style="width:6rem;height:5rem;margin-top:2rem" aria-hidden="true"><use href="#d-area-proyectos"/></svg>
+    </div>
+    <div>
+      <p class="lead">{{ h.quienes_texto }}</p>
+      <div class="fila-acciones mt-2">
+        <a class="boton" href="/quienes-somos/">Conocernos</a>
+        <a class="enlace-flecha" href="/quienes-somos/proyectos/"><span>Proyectos</span>{{ dib("flecha") }}</a>
+      </div>
+    </div>
+  </div>
+</section>

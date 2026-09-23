@@ -1,0 +1,7 @@
+---
+permalink: /robots.txt
+eleventyExcludeFromCollections: true
+---
+User-agent: *
+Disallow: /admin/
+{% if sitio.url %}Sitemap: {{ sitio.url }}/sitemap.xml{% endif %}

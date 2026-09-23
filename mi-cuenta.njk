@@ -1,0 +1,23 @@
+---
+layout: base.njk
+permalink: /mi-cuenta/
+titulo: Mi cuenta
+descripcion: Acceso a compras y materiales de ADNCognitivo.
+---
+{%- from "macros.njk" import dib -%}
+{%- set c = contenido.paginas.cuenta -%}
+{%- set cab = { titulo: c.titulo, bajada: c.bajada, miga: [{ texto: "Mi cuenta" }], dib: "cuenta" } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor dos-col">
+    <div class="prosa">{{ c.cuerpo_html | safe }}</div>
+    <div class="marco" style="padding:1.75rem">
+      <p class="rotulo" style="margin-bottom:1rem">Accesos</p>
+      <div class="fila-acciones">
+        {% if sitio.venta.url_cuenta %}<a class="boton" href="{{ sitio.venta.url_cuenta }}" target="_blank" rel="noopener">Ir a mis compras{{ dib("externo") }}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>{% endif %}
+        {% if sitio.email %}<a class="boton boton--contorno" href="mailto:{{ sitio.email }}">Escribirnos</a>{% endif %}
+        <a class="enlace-flecha" href="/catalogo/"><span>Ver catálogo</span>{{ dib("flecha") }}</a>
+      </div>
+    </div>
+  </div>
+</section>

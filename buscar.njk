@@ -1,0 +1,26 @@
+---
+layout: base.njk
+permalink: /buscar/
+titulo: Buscar
+descripcion: Buscar formación, materiales, experiencias, publicaciones, recursos y equipo en ADNCognitivo.
+scripts: ["/assets/js/buscar.js"]
+---
+{%- from "macros.njk" import dib -%}
+{%- set cab = { titulo: "Buscar", bajada: "Formación, materiales, experiencias, publicaciones, recursos y equipo.", miga: [{ texto: "Buscar" }], dib: "pregunta" } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion" style="padding-top:clamp(3rem,6vw,5rem)">
+  <div class="contenedor">
+    <form class="buscador" role="search" action="/buscar/" method="get" data-buscador>
+      <div class="buscador__campo">
+        <label class="visualmente-oculto" for="q">Qué querés buscar</label>
+        {{ dib("buscar", "buscador__lupa") }}
+        <input id="q" name="q" type="search" autocomplete="off" placeholder="memoria, funciones ejecutivas, aula…">
+      </div>
+      <button class="boton" type="submit">Buscar</button>
+    </form>
+    <div class="resultados" aria-live="polite" data-resultados>
+      <p class="mano" style="font-size:1.35rem;margin-top:1rem">Probá con un tema, un título o un nombre.</p>
+    </div>
+    <noscript><p>El buscador necesita JavaScript. Podés recorrer las secciones desde el menú.</p></noscript>
+  </div>
+</section>

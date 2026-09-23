@@ -1,0 +1,10 @@
+---
+layout: base.njk
+permalink: /privacidad/
+eleventyComputed:
+  titulo: "{{ contenido.paginas.privacidad.titulo }}"
+---
+{%- set c = contenido.paginas.privacidad -%}
+{%- set cab = { titulo: c.titulo, bajada: c.bajada, miga: [{ texto: c.titulo }] } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion"><div class="contenedor"><div class="prosa">{{ c.cuerpo_html | safe }}</div></div></section>

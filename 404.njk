@@ -1,0 +1,17 @@
+---
+layout: base.njk
+permalink: /404.html
+titulo: Página no encontrada
+eleventyExcludeFromCollections: true
+---
+{%- from "macros.njk" import dib -%}
+<section class="seccion">
+  <div class="contenedor dos-col" style="align-items:center">
+    <svg class="dib gira-2" style="width:8rem;height:12rem" aria-hidden="true"><use href="#d-pregunta"/></svg>
+    <div>
+      <h1 class="cabeza-pagina__titulo">Esta página no existe</h1>
+      <p class="cabeza-pagina__bajada">Puede que la dirección haya cambiado. Probá desde el inicio o con el buscador.</p>
+      <div class="fila-acciones mt-2"><a class="boton" href="/">Ir al inicio</a><a class="boton boton--contorno" href="/buscar/">Buscar</a></div>
+    </div>
+  </div>
+</section>
