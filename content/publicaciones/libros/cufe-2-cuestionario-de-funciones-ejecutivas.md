@@ -40,7 +40,7 @@ tema:
   - Cognición
   - Funciones ejecutivas
   - Evaluación
-imagen: https://www.paidoslibreria.com.ar/productos/9501210705/
+imagen: /assets/uploads/ig-feed.-cufe-2.-fotografica.jpg
 destacado: false
 orden: 10
 visible: true
