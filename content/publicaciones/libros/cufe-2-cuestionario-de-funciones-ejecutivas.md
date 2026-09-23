@@ -41,6 +41,7 @@ tema:
   - Funciones ejecutivas
   - Evaluación
 imagen: /assets/uploads/ig-feed.-cufe-2.-fotografica.jpg
+enlace: https://www.paidoslibreria.com.ar/productos/9501210705/
 destacado: false
 orden: 10
 visible: true
