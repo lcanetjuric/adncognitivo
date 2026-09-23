@@ -1,31 +1,31 @@
 {
-  "nombre": "ADNCognitivo",
-  "tagline": "Formación y recursos basados en evidencia",
-  "frase": "Formación y recursos basados en evidencia para profesionales que trabajan con cognición, desarrollo y aprendizaje.",
-  "titulo_seo": "ADNCognitivo | Formación y recursos sobre cognición, desarrollo y aprendizaje",
-  "descripcion_seo": "Formación, cursos, masterclasses, materiales y experiencias para profesionales que trabajan con cognición, desarrollo y aprendizaje.",
-  "url_sitio": "",
-  "logo": "/assets/img/marca/logo-horizontal.svg",
-  "logo_oscuro": "/assets/img/marca/logo-horizontal-oscuro.svg",
-  "favicon": "/assets/img/marca/favicon.svg",
   "imagen_og": "/assets/img/og-adncognitivo.png",
-  "email": "",
-  "instagram": "",
-  "linkedin": "",
-  "otras_redes": [],
-  "footer_texto": "Formación y recursos basados en evidencia para profesionales que trabajan con cognición, desarrollo y aprendizaje.",
-  "footer_nota": "",
-  "venta": {
-    "plataforma": "Payhip",
-    "texto_comprar": "Comprar",
-    "url_cuenta": "",
-    "abrir_en_nueva_pestana": true
-  },
+  "frase": "Formación y recursos basados en evidencia para profesionales que trabajan con cognición, desarrollo y aprendizaje.",
+  "logo_oscuro": "/assets/img/marca/logo-horizontal-oscuro.svg",
+  "nombre": "ADNCognitivo",
+  "logo": "/assets/img/marca/logo-horizontal.svg",
+  "descripcion_seo": "Formación, cursos, masterclasses, materiales y experiencias para profesionales que trabajan con cognición, desarrollo y aprendizaje.",
   "suscripcion": {
     "activa": false,
     "titulo": "Recibir novedades",
     "texto": "Dejanos tu email y te avisamos cuando haya recursos nuevos.",
     "modo": "netlify",
     "url_externa": ""
-  }
+  },
+  "venta": {
+    "plataforma": "Payhip",
+    "texto_comprar": "Comprar",
+    "url_cuenta": "",
+    "abrir_en_nueva_pestana": true
+  },
+  "tagline": "Formación y recursos basados en evidencia",
+  "footer_nota": "",
+  "instagram": "@lorecanet",
+  "favicon": "/assets/img/marca/favicon.svg",
+  "url_sitio": "",
+  "titulo_seo": "ADNCognitivo | Formación y recursos sobre cognición, desarrollo y aprendizaje",
+  "email": "adncognitivo@gmail.com",
+  "linkedin": "",
+  "footer_texto": "Formación y recursos basados en evidencia para profesionales que trabajan con cognición, desarrollo y aprendizaje.",
+  "otras_redes": []
 }
