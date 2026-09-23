@@ -6,7 +6,7 @@
 # ==========================================================
 backend:
   name: github
-  repo: USUARIO-DE-GITHUB/adncognitivo
+  repo: lcanetjuric/adncognitivo
   branch: main
   base_url: https://api.netlify.com
   commit_messages:
