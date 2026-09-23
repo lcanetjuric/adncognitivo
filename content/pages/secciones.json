@@ -1,0 +1,47 @@
+{
+  "formacion": {
+    "titulo": "Formación",
+    "bajada": "Cursos y masterclasses.",
+    "intro": ""
+  },
+  "cursos": {
+    "titulo": "Cursos",
+    "bajada": "Propuestas de formación con recorrido completo.",
+    "intro": ""
+  },
+  "masterclasses": {
+    "titulo": "Masterclasses",
+    "bajada": "Encuentros breves sobre un tema.",
+    "intro": ""
+  },
+  "materiales": {
+    "titulo": "Materiales",
+    "bajada": "Recursos para la práctica.",
+    "intro": ""
+  },
+  "experiencias": {
+    "titulo": "Experiencias",
+    "bajada": "Explorar también es una forma de aprender.",
+    "intro": ""
+  },
+  "publicaciones": {
+    "titulo": "Publicaciones",
+    "bajada": "Libros, capítulos y artículos científicos.",
+    "intro": ""
+  },
+  "recursos": {
+    "titulo": "Recursos gratuitos",
+    "bajada": "Guías, actividades y herramientas de acceso libre.",
+    "intro": ""
+  },
+  "proyectos": {
+    "titulo": "Proyectos",
+    "bajada": "Líneas de trabajo e investigación.",
+    "intro": ""
+  },
+  "catalogo": {
+    "titulo": "Catálogo completo",
+    "bajada": "Todo lo que ofrece ADNCognitivo, con filtros por tipo, tema y público.",
+    "intro": ""
+  }
+}

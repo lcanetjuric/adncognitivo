@@ -1,0 +1,19 @@
+{
+  "hero_etiqueta": "Formación y recursos basados en evidencia",
+  "hero_texto": "Para profesionales que trabajan con cognición, desarrollo y aprendizaje.",
+  "hero_nota": "Conocimiento para vidas reales.",
+  "boton_1_texto": "Explorar formación",
+  "boton_1_url": "/formacion/",
+  "boton_2_texto": "Explorar recursos",
+  "boton_2_url": "/materiales/",
+  "idea_titulo": "Aprender. Comprender. Aplicar.",
+  "idea_texto": "ADNCognitivo reúne conocimiento científico, formación y recursos para quienes trabajan con cognición, desarrollo y aprendizaje.",
+  "areas": [
+    { "titulo": "Formación", "texto": "Cursos y masterclasses.", "url": "/formacion/", "icono": "formacion" },
+    { "titulo": "Materiales", "texto": "Recursos para la práctica.", "url": "/materiales/", "icono": "materiales" },
+    { "titulo": "Experiencias", "texto": "Herramientas interactivas para explorar conceptos.", "url": "/experiencias/", "icono": "experiencias" },
+    { "titulo": "Publicaciones", "texto": "Libros, capítulos y artículos científicos.", "url": "/publicaciones/", "icono": "publicaciones" }
+  ],
+  "quienes_titulo": "Quiénes somos",
+  "quienes_texto": "ADNCognitivo es un espacio de formación, investigación y desarrollo de recursos sobre cognición, desarrollo y aprendizaje."
+}
