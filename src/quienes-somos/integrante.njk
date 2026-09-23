@@ -1,0 +1,43 @@
+---
+layout: base.njk
+pagination:
+  data: contenido.equipo
+  size: 1
+  alias: m
+permalink: "{{ m.url }}"
+eleventyComputed:
+  titulo: "{{ m.nombre }}"
+  descripcion: "{{ m.descripcion or m.cargo }}"
+  imagen: "{{ m.foto }}"
+---
+{%- from "macros.njk" import pub, dib -%}
+<script type="application/ld+json">{{ { "@context": "https://schema.org", "@type": "Person", "name": m.nombre, "jobTitle": m.cargo or null, "description": m.descripcion or null, "sameAs": m.enlaces | pluck("url"), "worksFor": { "@type": "Organization", "name": sitio.nombre } } | json | safe }}</script>
+{%- set cab = { titulo: m.nombre, bajada: m.cargo, miga: [{ texto: "Quiénes somos", url: "/quienes-somos/" }, { texto: "Equipo", url: "/quienes-somos/#equipo" }, { texto: m.nombre }] } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor dos-col">
+    <div>
+      <div class="persona__foto marco marco--fino" style="max-width:340px">
+        {% if m.foto %}<img src="{{ m.foto }}" alt="{{ m.foto_alt or ('Foto de ' + m.nombre) }}">{% else %}<span class="persona__iniciales" aria-hidden="true">{{ m.nombre[0] }}</span>{% endif %}
+      </div>
+      {%- if m.enlaces.length %}
+      <ul class="pie__lista" style="margin-top:1.5rem">
+        {% for e in m.enlaces %}<li><a class="enlace-flecha" href="{{ e.url }}" target="_blank" rel="noopener"><span>{{ e.etiqueta }}</span>{{ dib("externo") }}</a></li>{% endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+    <div>
+      {% if m.descripcion %}<p class="lead">{{ m.descripcion }}</p>{% endif %}
+      {% if m.cuerpo_html %}<h2 class="rotulo mt-3" style="margin-bottom:1rem">Trayectoria</h2><div class="prosa">{{ m.cuerpo_html | safe }}</div>{% endif %}
+      {%- if m.publicaciones.length or m.publicaciones_texto %}
+      <h2 class="rotulo mt-3" style="margin-bottom:1rem">Publicaciones</h2>
+      {% if m.publicaciones.length %}<ul class="pub-lista">{% for p in m.publicaciones %}{{ pub(p) }}{% endfor %}</ul>{% endif %}
+      {% if m.publicaciones_texto %}<div class="prosa mt-2">{{ m.publicaciones_texto | md | safe }}</div>{% endif %}
+      {%- endif %}
+      {%- if m.proyectos.length %}
+      <h2 class="rotulo mt-3" style="margin-bottom:1rem">Proyectos</h2>
+      <ul class="pie__lista">{% for pr in m.proyectos %}<li><a href="{{ pr.url }}">{{ pr.nombre }}</a>{% if pr.anio %} · {{ pr.anio }}{% endif %}</li>{% endfor %}</ul>
+      {%- endif %}
+    </div>
+  </div>
+</section>

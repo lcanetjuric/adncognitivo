@@ -1,0 +1,47 @@
+---
+layout: base.njk
+permalink: /quienes-somos/
+titulo: Quiénes somos
+descripcion: ADNCognitivo es un espacio de formación, investigación y desarrollo de recursos sobre cognición, desarrollo y aprendizaje.
+---
+{%- from "macros.njk" import dib, vacio -%}
+{%- set q = contenido.paginas.quienes -%}
+{%- set cab = { titulo: q.titulo, bajada: q.bajada, miga: [{ texto: "Quiénes somos" }], dib: "area-proyectos" } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor dos-col">
+    <div>
+      {% if q.imagen %}<img src="{{ q.imagen }}" alt="" style="border:2px solid var(--tinta)">{% else %}
+      <p class="mano gira-1" style="font-size:1.6rem;max-width:14ch">investigar, pensar, desarrollar herramientas, compartir.</p>
+      <svg class="dib" style="width:7rem;height:4rem;margin-top:.5rem" aria-hidden="true"><use href="#d-flecha-curva"/></svg>
+      {% endif %}
+    </div>
+    <div class="prosa lead-primero">{{ q.cuerpo_html | safe }}</div>
+  </div>
+</section>
+
+<section class="seccion" id="equipo" aria-labelledby="equipo-titulo">
+  <div class="contenedor">
+    <header class="encabezado">
+      <span class="encabezado__num" aria-hidden="true">{{ dib("asterisco") }}</span>
+      <div><h2 class="encabezado__titulo" id="equipo-titulo">Equipo</h2></div>
+    </header>
+    {%- if contenido.equipo.length %}
+    <div class="equipo">
+      {%- for m in contenido.equipo %}
+      <article class="persona">
+        <div class="persona__foto marco marco--fino">
+          {% if m.foto %}<img src="{{ m.foto }}" alt="{{ m.foto_alt or ('Foto de ' + m.nombre) }}" loading="lazy">{% else %}<span class="persona__iniciales" aria-hidden="true">{{ m.nombre[0] }}</span>{% endif %}
+        </div>
+        <h3 class="persona__nombre"><a href="{{ m.url }}">{{ m.nombre }}</a></h3>
+        {% if m.cargo %}<p class="persona__cargo">{{ m.cargo }}</p>{% endif %}
+        {% if m.descripcion %}<p class="texto-sec" style="margin-top:.75rem">{{ m.descripcion }}</p>{% endif %}
+      </article>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    {{ vacio("La presentación del equipo está en preparación.", "Cada integrante va a tener su ficha con trayectoria, publicaciones y enlaces.", "cuenta") }}
+    {%- endif %}
+  </div>
+</section>
+{% include "partes/proyectos-bloque.njk" %}

@@ -1,0 +1,50 @@
+---
+layout: base.njk
+pagination:
+  data: contenido.publicaciones
+  size: 1
+  alias: p
+permalink: "{{ p.url }}"
+eleventyComputed:
+  titulo: "{{ p.titulo }}"
+  descripcion: "{{ p.descripcion or p.autores_texto }}"
+  imagen: "{{ p.imagen }}"
+---
+{%- from "macros.njk" import dib -%}
+{%- set def = contenido.tiposPublicacion[p.tipo] -%}
+{%- set tipoSchema = { libro: "Book", capitulo: "Chapter", articulo: "ScholarlyArticle", otra: "CreativeWork" }[p.tipo] -%}
+<script type="application/ld+json">{{ { "@context": "https://schema.org", "@type": tipoSchema, "name": p.titulo, "author": p.autores, "datePublished": (p.anio | string) if p.anio else null, "publisher": p.editorial or p.revista or null, "sameAs": p.doi_url or null, "url": p.enlace or null } | json | safe }}</script>
+{%- set cab = { titulo: p.titulo, miga: [{ texto: "Publicaciones", url: "/publicaciones/" }, { texto: def.plural, url: def.ruta }, { texto: p.anio or "s/f" }] } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor detalle">
+    <div>
+      {% if p.imagen %}<div class="detalle__visual" style="aspect-ratio:auto;max-width:360px"><img src="{{ p.imagen }}" alt="{{ p.imagen_alt or '' }}"></div>{% endif %}
+      {% if p.autores_texto %}<p class="lead">{{ p.autores_texto }}</p>{% endif %}
+      {% if p.descripcion %}<div class="prosa"><p>{{ p.descripcion }}</p></div>{% endif %}
+      {% if p.cuerpo_html %}<div class="prosa">{{ p.cuerpo_html | safe }}</div>{% endif %}
+      {%- if p.integrantes_equipo.length %}
+      <p class="rotulo mt-3">Del equipo</p>
+      <p>{% for m in p.integrantes_equipo %}<a href="{{ m.url }}">{{ m.nombre }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+      {%- endif %}
+    </div>
+    <aside class="detalle__ficha marco" aria-label="Referencia">
+      <dl>
+        <dt>Tipo</dt><dd>{{ p.subtipo or def.etiqueta }}</dd>
+        {% if p.anio %}<dt>Año</dt><dd>{{ p.anio }}</dd>{% endif %}
+        {% if p.libro %}<dt>Libro</dt><dd>{{ p.libro }}</dd>{% endif %}
+        {% if p.editores %}<dt>Edición</dt><dd>{{ p.editores }}</dd>{% endif %}
+        {% if p.revista %}<dt>Revista</dt><dd>{{ p.revista }}</dd>{% endif %}
+        {% if p.editorial %}<dt>Editorial</dt><dd>{{ p.editorial }}</dd>{% endif %}
+        {% if p.volumen %}<dt>Volumen</dt><dd>{{ p.volumen }}{% if p.numero %} ({{ p.numero }}){% endif %}</dd>{% endif %}
+        {% if p.paginas %}<dt>Páginas</dt><dd>{{ p.paginas }}</dd>{% endif %}
+        {% if p.isbn %}<dt>ISBN</dt><dd>{{ p.isbn }}</dd>{% endif %}
+        {% if p.doi %}<dt>DOI</dt><dd style="word-break:break-all"><a href="{{ p.doi_url }}" target="_blank" rel="noopener">{{ p.doi }}</a></dd>{% endif %}
+      </dl>
+      <div class="fila-acciones">
+        {% if p.enlace %}<a class="boton" href="{{ p.enlace }}" target="_blank" rel="noopener">Ver publicación{{ dib("externo") }}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>{% endif %}
+        {% if p.pdf %}<a class="boton boton--contorno" href="{{ p.pdf }}" download>Descargar PDF{{ dib("descarga") }}</a>{% endif %}
+      </div>
+    </aside>
+  </div>
+</section>

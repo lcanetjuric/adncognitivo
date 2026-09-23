@@ -1,0 +1,29 @@
+---
+layout: base.njk
+permalink: /publicaciones/
+titulo: Publicaciones
+descripcion: Libros, capítulos, artículos científicos y otras publicaciones del equipo de ADNCognitivo.
+---
+{%- from "macros.njk" import pub, vacio, dib -%}
+{%- set sec = contenido.paginas.secciones.publicaciones -%}
+{%- set cab = { titulo: sec.titulo, bajada: sec.bajada, miga: [{ texto: "Publicaciones" }], dib: "area-publicaciones" } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor">
+    {% if sec.intro %}<div class="prosa" style="margin-bottom:3rem">{{ sec.intro | md | safe }}</div>{% endif %}
+    {% include "partes/subcats.njk" %}
+    {%- if contenido.publicaciones.length %}
+    {%- for clave, def in contenido.tiposPublicacion %}
+    {%- set lista = contenido.publicacionesPorTipo[clave] %}
+    {%- if lista.length %}
+    <h2 class="rotulo" style="margin:3rem 0 1rem" id="{{ clave }}">{{ def.plural }} · {{ lista.length }}</h2>
+    <ul class="pub-lista">{% for p in lista %}{{ pub(p) }}{% endfor %}</ul>
+    <p class="mt-1"><a class="enlace-flecha" href="{{ def.ruta }}"><span>Ver {{ def.plural | lower }}</span>{{ dib("flecha") }}</a></p>
+    {%- endif %}
+    {%- endfor %}
+    {%- else %}
+    {{ vacio("Estamos incorporando nuestra producción científica.", "Libros, capítulos, artículos y otras publicaciones se van a listar acá a medida que se carguen.", "area-publicaciones") }}
+    {%- endif %}
+  </div>
+</section>
+{% include "partes/proyectos-bloque.njk" %}

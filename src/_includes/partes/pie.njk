@@ -1,0 +1,40 @@
+{%- from "macros.njk" import dib -%}
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie__grilla">
+      <div class="pie__marca">
+        <img class="pie__logo" src="{{ sitio.logo_oscuro }}" alt="{{ sitio.nombre }}" width="380" height="80">
+        <p class="pie__frase">{{ sitio.footer_texto }}</p>
+        {% if sitio.footer_nota %}<p class="pie__nota">{{ sitio.footer_nota }}</p>{% endif %}
+      </div>
+      <div>
+        <h2 class="pie__titulo">Explorar</h2>
+        <ul class="pie__lista">
+          <li><a href="/formacion/">Formación</a></li>
+          <li><a href="/materiales/">Materiales</a></li>
+          <li><a href="/experiencias/">Experiencias</a></li>
+          <li><a href="/publicaciones/">Publicaciones</a></li>
+          <li><a href="/quienes-somos/">Quiénes somos</a></li>
+          <li><a href="/recursos-gratuitos/">Recursos gratuitos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="pie__titulo">Contacto</h2>
+        <ul class="pie__lista">
+          {% if sitio.email %}<li><a href="mailto:{{ sitio.email }}">{{ sitio.email }}</a></li>{% endif %}
+          {% if sitio.instagram %}<li><a href="{{ sitio.instagram }}" rel="me noopener" target="_blank">Instagram</a></li>{% endif %}
+          {% if sitio.linkedin %}<li><a href="{{ sitio.linkedin }}" rel="me noopener" target="_blank">LinkedIn</a></li>{% endif %}
+          {% for r in sitio.otras_redes %}<li><a href="{{ r.url }}" rel="me noopener" target="_blank">{{ r.nombre }}</a></li>{% endfor %}
+          {% if not sitio.email and not sitio.instagram and not sitio.linkedin and not sitio.otras_redes.length %}
+          <li class="pendiente">Datos de contacto: completar en Configuración del sitio.</li>
+          {% endif %}
+          <li><a href="/buscar/">Buscar en el sitio</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pie__base">
+      <p>© {{ sitio.anio }} {{ sitio.nombre }}</p>
+      <p><a href="/aviso-legal/">Aviso legal</a> · <a href="/privacidad/">Privacidad</a></p>
+    </div>
+  </div>
+</footer>

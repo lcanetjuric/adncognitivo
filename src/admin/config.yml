@@ -1,0 +1,1726 @@
+# ==========================================================
+#  Decap CMS · ADNCognitivo
+#  Archivo generado por scripts/cms/generar_config.py
+#  IMPORTANTE: reemplazar USUARIO-DE-GITHUB por tu usuario
+#  (ver README, paso "Conectar el administrador").
+# ==========================================================
+backend:
+  name: github
+  repo: USUARIO-DE-GITHUB/adncognitivo
+  branch: main
+  base_url: https://api.netlify.com
+  commit_messages:
+    create: Crear {{collection}} “{{slug}}”
+    update: Actualizar {{collection}} “{{slug}}”
+    delete: Eliminar {{collection}} “{{slug}}”
+    uploadMedia: Subir archivo “{{path}}”
+    deleteMedia: Eliminar archivo “{{path}}”
+local_backend: true
+locale: es
+logo_url: /assets/img/marca/logo-horizontal.svg
+media_folder: src/assets/uploads
+public_folder: /assets/uploads
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+collections:
+- name: cursos
+  label: Cursos
+  label_singular: Curso
+  folder: content/productos/cursos
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{titulo}} · {{estado}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - titulo
+  - orden
+  - estado
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: curso
+  - label: Categoría
+    name: categoria
+    widget: select
+    options:
+    - Curso
+    required: false
+  - label: Descripción breve
+    name: descripcion
+    widget: text
+    hint: Una a tres líneas. Aparece en los listados.
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: &id001
+    - Cognición
+    - Desarrollo
+    - Aprendizaje
+    - Funciones ejecutivas
+    - Memoria
+    - Metacognición
+    - Evaluación
+    required: false
+  - label: Público
+    name: publico
+    widget: select
+    multiple: true
+    options: &id002
+    - Salud
+    - Educación
+    - Investigación
+    - Profesionales
+    required: false
+    hint: Podés elegir varios. Si no aplica a un público en particular, dejalo vacío.
+  - &id003
+    label: Modalidad
+    name: modalidad
+    widget: string
+    required: false
+    hint: 'Ej: en línea, asincrónica, presencial.'
+  - &id004
+    label: Duración
+    name: duracion
+    widget: string
+    required: false
+  - &id005
+    label: Fechas / inicio
+    name: fechas
+    widget: string
+    required: false
+  - label: Imagen
+    name: imagen
+    widget: image
+    required: false
+    hint: Opcional. Si no hay imagen se muestra una portada tipográfica automática.
+  - label: Descripción de la imagen (texto alternativo)
+    name: imagen_alt
+    widget: string
+    required: false
+    hint: Qué se ve en la imagen, para personas que usan lectores de pantalla.
+  - label: ¿Es gratuito?
+    name: gratuito
+    widget: boolean
+    default: false
+    required: false
+    hint: Gratuito → botón ACCEDER / DESCARGAR / EXPLORAR. Pago → botón COMPRAR.
+  - label: Precio
+    name: precio
+    widget: string
+    required: false
+    hint: 'Solo el número (ej: 45 o 25000). Vacío = no se muestra precio.'
+  - label: Moneda
+    name: moneda
+    widget: select
+    options: &id006
+    - USD
+    - ARS
+    - EUR
+    required: false
+  - label: URL de compra (Payhip u otra plataforma)
+    name: url_compra
+    widget: string
+    required: false
+    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+  - label: URL de acceso (gratuitos)
+    name: url_acceso
+    widget: string
+    required: false
+    hint: 'Para productos gratuitos: enlace a la página, video, formulario o archivo externo.'
+  - label: Archivo descargable (gratuitos)
+    name: archivo
+    widget: file
+    required: false
+    hint: Si subís un archivo (PDF, etc.) el botón pasa a ser DESCARGAR.
+  - label: Texto del botón (opcional)
+    name: texto_boton
+    widget: string
+    required: false
+    hint: Solo si querés reemplazar el texto automático (Comprar / Acceder / Descargar / Explorar).
+  - label: Estado
+    name: estado
+    widget: select
+    options: &id007
+    - label: Disponible
+      value: disponible
+    - label: Próximamente
+      value: proximamente
+    - label: Finalizado / no disponible
+      value: finalizado
+    default: disponible
+  - label: Destacado
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+    hint: Los destacados aparecen en la página de inicio.
+  - label: Mostrar también en Recursos gratuitos
+    name: tambien_en_recursos
+    widget: boolean
+    default: false
+    required: false
+    hint: Solo tiene efecto si el producto es gratuito.
+  - label: Orden
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+    hint: Número menor = aparece primero.
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+    hint: Desactivalo para ocultar sin borrar.
+  - label: Descripción larga
+    name: body
+    widget: markdown
+    required: false
+- name: masterclasses
+  label: Masterclasses
+  label_singular: Masterclass
+  folder: content/productos/masterclasses
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{titulo}} · {{estado}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - titulo
+  - orden
+  - estado
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: masterclass
+  - label: Categoría
+    name: categoria
+    widget: select
+    options:
+    - Masterclass
+    required: false
+  - label: Descripción breve
+    name: descripcion
+    widget: text
+    hint: Una a tres líneas. Aparece en los listados.
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Público
+    name: publico
+    widget: select
+    multiple: true
+    options: *id002
+    required: false
+    hint: Podés elegir varios. Si no aplica a un público en particular, dejalo vacío.
+  - *id003
+  - *id004
+  - *id005
+  - label: Imagen
+    name: imagen
+    widget: image
+    required: false
+    hint: Opcional. Si no hay imagen se muestra una portada tipográfica automática.
+  - label: Descripción de la imagen (texto alternativo)
+    name: imagen_alt
+    widget: string
+    required: false
+    hint: Qué se ve en la imagen, para personas que usan lectores de pantalla.
+  - label: ¿Es gratuito?
+    name: gratuito
+    widget: boolean
+    default: false
+    required: false
+    hint: Gratuito → botón ACCEDER / DESCARGAR / EXPLORAR. Pago → botón COMPRAR.
+  - label: Precio
+    name: precio
+    widget: string
+    required: false
+    hint: 'Solo el número (ej: 45 o 25000). Vacío = no se muestra precio.'
+  - label: Moneda
+    name: moneda
+    widget: select
+    options: *id006
+    required: false
+  - label: URL de compra (Payhip u otra plataforma)
+    name: url_compra
+    widget: string
+    required: false
+    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+  - label: URL de acceso (gratuitos)
+    name: url_acceso
+    widget: string
+    required: false
+    hint: 'Para productos gratuitos: enlace a la página, video, formulario o archivo externo.'
+  - label: Archivo descargable (gratuitos)
+    name: archivo
+    widget: file
+    required: false
+    hint: Si subís un archivo (PDF, etc.) el botón pasa a ser DESCARGAR.
+  - label: Texto del botón (opcional)
+    name: texto_boton
+    widget: string
+    required: false
+    hint: Solo si querés reemplazar el texto automático (Comprar / Acceder / Descargar / Explorar).
+  - label: Estado
+    name: estado
+    widget: select
+    options: *id007
+    default: disponible
+  - label: Destacado
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+    hint: Los destacados aparecen en la página de inicio.
+  - label: Mostrar también en Recursos gratuitos
+    name: tambien_en_recursos
+    widget: boolean
+    default: false
+    required: false
+    hint: Solo tiene efecto si el producto es gratuito.
+  - label: Orden
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+    hint: Número menor = aparece primero.
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+    hint: Desactivalo para ocultar sin borrar.
+  - label: Descripción larga
+    name: body
+    widget: markdown
+    required: false
+- name: materiales
+  label: Materiales
+  label_singular: Material
+  folder: content/productos/materiales
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{titulo}} · {{estado}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - titulo
+  - orden
+  - estado
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: material
+  - label: Categoría
+    name: categoria
+    widget: select
+    options:
+    - Para el aula
+    - Para profesionales
+    - Guías
+    - Recursos descargables
+    required: false
+  - label: Descripción breve
+    name: descripcion
+    widget: text
+    hint: Una a tres líneas. Aparece en los listados.
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Público
+    name: publico
+    widget: select
+    multiple: true
+    options: *id002
+    required: false
+    hint: Podés elegir varios. Si no aplica a un público en particular, dejalo vacío.
+  - label: Formato
+    name: formato
+    widget: string
+    required: false
+    hint: 'Ej: PDF, kit imprimible, fichas.'
+  - label: Imagen
+    name: imagen
+    widget: image
+    required: false
+    hint: Opcional. Si no hay imagen se muestra una portada tipográfica automática.
+  - label: Descripción de la imagen (texto alternativo)
+    name: imagen_alt
+    widget: string
+    required: false
+    hint: Qué se ve en la imagen, para personas que usan lectores de pantalla.
+  - label: ¿Es gratuito?
+    name: gratuito
+    widget: boolean
+    default: false
+    required: false
+    hint: Gratuito → botón ACCEDER / DESCARGAR / EXPLORAR. Pago → botón COMPRAR.
+  - label: Precio
+    name: precio
+    widget: string
+    required: false
+    hint: 'Solo el número (ej: 45 o 25000). Vacío = no se muestra precio.'
+  - label: Moneda
+    name: moneda
+    widget: select
+    options: *id006
+    required: false
+  - label: URL de compra (Payhip u otra plataforma)
+    name: url_compra
+    widget: string
+    required: false
+    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+  - label: URL de acceso (gratuitos)
+    name: url_acceso
+    widget: string
+    required: false
+    hint: 'Para productos gratuitos: enlace a la página, video, formulario o archivo externo.'
+  - label: Archivo descargable (gratuitos)
+    name: archivo
+    widget: file
+    required: false
+    hint: Si subís un archivo (PDF, etc.) el botón pasa a ser DESCARGAR.
+  - label: Texto del botón (opcional)
+    name: texto_boton
+    widget: string
+    required: false
+    hint: Solo si querés reemplazar el texto automático (Comprar / Acceder / Descargar / Explorar).
+  - label: Estado
+    name: estado
+    widget: select
+    options: *id007
+    default: disponible
+  - label: Destacado
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+    hint: Los destacados aparecen en la página de inicio.
+  - label: Mostrar también en Recursos gratuitos
+    name: tambien_en_recursos
+    widget: boolean
+    default: false
+    required: false
+    hint: Solo tiene efecto si el producto es gratuito.
+  - label: Orden
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+    hint: Número menor = aparece primero.
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+    hint: Desactivalo para ocultar sin borrar.
+  - label: Descripción larga
+    name: body
+    widget: markdown
+    required: false
+- name: experiencias
+  label: Experiencias
+  label_singular: Experiencia
+  folder: content/productos/experiencias
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{titulo}} · {{estado}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - titulo
+  - orden
+  - estado
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: experiencia
+  - label: Categoría / tipo
+    name: categoria
+    widget: string
+    required: false
+    hint: 'Texto libre (ej: Simulación, Escenario interactivo, Juego).'
+  - label: Descripción breve
+    name: descripcion
+    widget: text
+    hint: Una a tres líneas. Aparece en los listados.
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Público
+    name: publico
+    widget: select
+    multiple: true
+    options: *id002
+    required: false
+    hint: Podés elegir varios. Si no aplica a un público en particular, dejalo vacío.
+  - label: Imagen
+    name: imagen
+    widget: image
+    required: false
+    hint: Opcional. Si no hay imagen se muestra una portada tipográfica automática.
+  - label: Descripción de la imagen (texto alternativo)
+    name: imagen_alt
+    widget: string
+    required: false
+    hint: Qué se ve en la imagen, para personas que usan lectores de pantalla.
+  - label: ¿Es gratuito?
+    name: gratuito
+    widget: boolean
+    default: true
+    required: false
+    hint: Gratuito → botón ACCEDER / DESCARGAR / EXPLORAR. Pago → botón COMPRAR.
+  - label: Precio
+    name: precio
+    widget: string
+    required: false
+    hint: 'Solo el número (ej: 45 o 25000). Vacío = no se muestra precio.'
+  - label: Moneda
+    name: moneda
+    widget: select
+    options: *id006
+    required: false
+  - label: URL de compra (Payhip u otra plataforma)
+    name: url_compra
+    widget: string
+    required: false
+    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+  - label: URL de la experiencia
+    name: url_acceso
+    widget: string
+    required: false
+    hint: Dirección donde está la experiencia; se abre tal cual, sin modificarla.
+  - label: Texto del botón (opcional)
+    name: texto_boton
+    widget: string
+    required: false
+    hint: Solo si querés reemplazar el texto automático (Comprar / Acceder / Descargar / Explorar).
+  - label: Estado
+    name: estado
+    widget: select
+    options: *id007
+    default: disponible
+  - label: Destacado
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+    hint: Los destacados aparecen en la página de inicio.
+  - label: Mostrar también en Recursos gratuitos
+    name: tambien_en_recursos
+    widget: boolean
+    default: false
+    required: false
+    hint: Solo tiene efecto si el producto es gratuito.
+  - label: Orden
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+    hint: Número menor = aparece primero.
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+    hint: Desactivalo para ocultar sin borrar.
+  - label: Descripción larga
+    name: body
+    widget: markdown
+    required: false
+- name: recursos
+  label: Recursos gratuitos
+  label_singular: Recurso gratuito
+  folder: content/productos/recursos
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{titulo}} · {{estado}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - titulo
+  - orden
+  - estado
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: recurso
+  - label: Categoría
+    name: categoria
+    widget: select
+    options:
+    - PDF
+    - Guía
+    - Actividad
+    - Experiencia
+    - Artículo
+    - Material
+    - Herramienta
+    required: false
+  - label: Descripción breve
+    name: descripcion
+    widget: text
+    hint: Una a tres líneas. Aparece en los listados.
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Público
+    name: publico
+    widget: select
+    multiple: true
+    options: *id002
+    required: false
+    hint: Podés elegir varios. Si no aplica a un público en particular, dejalo vacío.
+  - label: Imagen
+    name: imagen
+    widget: image
+    required: false
+    hint: Opcional. Si no hay imagen se muestra una portada tipográfica automática.
+  - label: Descripción de la imagen (texto alternativo)
+    name: imagen_alt
+    widget: string
+    required: false
+    hint: Qué se ve en la imagen, para personas que usan lectores de pantalla.
+  - label: Gratuito
+    name: gratuito
+    widget: hidden
+    default: true
+  - label: URL de acceso (gratuitos)
+    name: url_acceso
+    widget: string
+    required: false
+    hint: 'Para productos gratuitos: enlace a la página, video, formulario o archivo externo.'
+  - label: Archivo descargable (gratuitos)
+    name: archivo
+    widget: file
+    required: false
+    hint: Si subís un archivo (PDF, etc.) el botón pasa a ser DESCARGAR.
+  - label: Texto del botón (opcional)
+    name: texto_boton
+    widget: string
+    required: false
+    hint: Solo si querés reemplazar el texto automático (Comprar / Acceder / Descargar / Explorar).
+  - label: Estado
+    name: estado
+    widget: select
+    options: *id007
+    default: disponible
+  - label: Destacado
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+    hint: Los destacados aparecen en la página de inicio.
+  - label: Orden
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+    hint: Número menor = aparece primero.
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+    hint: Desactivalo para ocultar sin borrar.
+  - label: Descripción larga
+    name: body
+    widget: markdown
+    required: false
+- name: libros
+  label: Publicaciones · Libros
+  label_singular: Libro
+  folder: content/publicaciones/libros
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{anio}} · {{titulo}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - anio
+  - titulo
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: Opcional. Si queda vacío se genera desde el título.
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: libro
+  - label: Autores
+    name: autores
+    widget: list
+    hint: 'Un autor por línea, en el orden de la publicación (ej: Apellido, N.)'
+    field:
+      label: Autor/a
+      name: autor
+      widget: string
+  - label: Año
+    name: anio
+    widget: number
+    value_type: int
+    required: false
+  - &id008
+    label: Editorial
+    name: editorial
+    widget: string
+    required: false
+  - label: ISBN
+    name: isbn
+    widget: string
+    required: false
+  - label: Rol (autoría, compilación…)
+    name: rol
+    widget: string
+    required: false
+  - label: Descripción / resumen breve
+    name: descripcion
+    widget: text
+    required: false
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Integrantes del equipo que son autores
+    name: integrantes
+    widget: relation
+    collection: equipo
+    search_fields:
+    - nombre
+    value_field: '{{slug}}'
+    display_fields:
+    - nombre
+    multiple: true
+    required: false
+    hint: Vincula la publicación con la ficha del integrante (aparece en su página).
+  - label: Imagen (tapa, figura)
+    name: imagen
+    widget: image
+    required: false
+  - label: Descripción de la imagen
+    name: imagen_alt
+    widget: string
+    required: false
+  - label: DOI
+    name: doi
+    widget: string
+    required: false
+    hint: 'Ej: 10.1016/j.xxxx.2024.01.001 (sin https://doi.org/).'
+  - label: Enlace
+    name: enlace
+    widget: string
+    required: false
+    hint: URL a la publicación, repositorio o editorial. Si está vacío se usa el DOI.
+  - label: Archivo PDF (si la licencia lo permite)
+    name: pdf
+    widget: file
+    required: false
+  - label: Destacada
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+  - label: Orden (dentro del mismo año)
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+  - label: Texto adicional
+    name: body
+    widget: markdown
+    required: false
+- name: capitulos
+  label: Publicaciones · Capítulos
+  label_singular: Capítulo
+  folder: content/publicaciones/capitulos
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{anio}} · {{titulo}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - anio
+  - titulo
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: Opcional. Si queda vacío se genera desde el título.
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: capitulo
+  - label: Autores
+    name: autores
+    widget: list
+    hint: 'Un autor por línea, en el orden de la publicación (ej: Apellido, N.)'
+    field:
+      label: Autor/a
+      name: autor
+      widget: string
+  - label: Año
+    name: anio
+    widget: number
+    value_type: int
+    required: false
+  - label: Título del libro
+    name: libro
+    widget: string
+    required: false
+  - label: Editores/as o compiladores/as del libro
+    name: editores
+    widget: string
+    required: false
+  - *id008
+  - label: Páginas
+    name: paginas
+    widget: string
+    required: false
+  - label: Descripción / resumen breve
+    name: descripcion
+    widget: text
+    required: false
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Integrantes del equipo que son autores
+    name: integrantes
+    widget: relation
+    collection: equipo
+    search_fields:
+    - nombre
+    value_field: '{{slug}}'
+    display_fields:
+    - nombre
+    multiple: true
+    required: false
+    hint: Vincula la publicación con la ficha del integrante (aparece en su página).
+  - label: Imagen (tapa, figura)
+    name: imagen
+    widget: image
+    required: false
+  - label: Descripción de la imagen
+    name: imagen_alt
+    widget: string
+    required: false
+  - label: DOI
+    name: doi
+    widget: string
+    required: false
+    hint: 'Ej: 10.1016/j.xxxx.2024.01.001 (sin https://doi.org/).'
+  - label: Enlace
+    name: enlace
+    widget: string
+    required: false
+    hint: URL a la publicación, repositorio o editorial. Si está vacío se usa el DOI.
+  - label: Archivo PDF (si la licencia lo permite)
+    name: pdf
+    widget: file
+    required: false
+  - label: Destacada
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+  - label: Orden (dentro del mismo año)
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+  - label: Texto adicional
+    name: body
+    widget: markdown
+    required: false
+- name: articulos
+  label: Publicaciones · Artículos científicos
+  label_singular: Artículo
+  folder: content/publicaciones/articulos
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{anio}} · {{titulo}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - anio
+  - titulo
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: Opcional. Si queda vacío se genera desde el título.
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: articulo
+  - label: Autores
+    name: autores
+    widget: list
+    hint: 'Un autor por línea, en el orden de la publicación (ej: Apellido, N.)'
+    field:
+      label: Autor/a
+      name: autor
+      widget: string
+  - label: Año
+    name: anio
+    widget: number
+    value_type: int
+    required: false
+  - label: Revista
+    name: revista
+    widget: string
+    required: false
+  - label: Volumen
+    name: volumen
+    widget: string
+    required: false
+  - label: Número
+    name: numero
+    widget: string
+    required: false
+  - label: Páginas
+    name: paginas
+    widget: string
+    required: false
+  - label: Descripción / resumen breve
+    name: descripcion
+    widget: text
+    required: false
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Integrantes del equipo que son autores
+    name: integrantes
+    widget: relation
+    collection: equipo
+    search_fields:
+    - nombre
+    value_field: '{{slug}}'
+    display_fields:
+    - nombre
+    multiple: true
+    required: false
+    hint: Vincula la publicación con la ficha del integrante (aparece en su página).
+  - label: Imagen (tapa, figura)
+    name: imagen
+    widget: image
+    required: false
+  - label: Descripción de la imagen
+    name: imagen_alt
+    widget: string
+    required: false
+  - label: DOI
+    name: doi
+    widget: string
+    required: false
+    hint: 'Ej: 10.1016/j.xxxx.2024.01.001 (sin https://doi.org/).'
+  - label: Enlace
+    name: enlace
+    widget: string
+    required: false
+    hint: URL a la publicación, repositorio o editorial. Si está vacío se usa el DOI.
+  - label: Archivo PDF (si la licencia lo permite)
+    name: pdf
+    widget: file
+    required: false
+  - label: Destacada
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+  - label: Orden (dentro del mismo año)
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+  - label: Texto adicional
+    name: body
+    widget: markdown
+    required: false
+- name: otras
+  label: Publicaciones · Otras
+  label_singular: Publicación
+  folder: content/publicaciones/otras
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: titulo
+  summary: '{{anio}} · {{titulo}}'
+  editor:
+    preview: false
+  sortable_fields:
+  - anio
+  - titulo
+  fields:
+  - label: Título
+    name: titulo
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+    hint: Opcional. Si queda vacío se genera desde el título.
+  - label: Tipo
+    name: tipo
+    widget: hidden
+    default: otra
+  - label: Autores
+    name: autores
+    widget: list
+    hint: 'Un autor por línea, en el orden de la publicación (ej: Apellido, N.)'
+    field:
+      label: Autor/a
+      name: autor
+      widget: string
+  - label: Año
+    name: anio
+    widget: number
+    value_type: int
+    required: false
+  - label: Tipo de publicación
+    name: subtipo
+    widget: string
+    required: false
+    hint: 'Ej: tesis, informe técnico, divulgación, ponencia, podcast.'
+  - label: Medio / editorial / evento
+    name: editorial
+    widget: string
+    required: false
+  - label: Descripción / resumen breve
+    name: descripcion
+    widget: text
+    required: false
+  - label: Temas
+    name: tema
+    widget: select
+    multiple: true
+    options: *id001
+    required: false
+  - label: Integrantes del equipo que son autores
+    name: integrantes
+    widget: relation
+    collection: equipo
+    search_fields:
+    - nombre
+    value_field: '{{slug}}'
+    display_fields:
+    - nombre
+    multiple: true
+    required: false
+    hint: Vincula la publicación con la ficha del integrante (aparece en su página).
+  - label: Imagen (tapa, figura)
+    name: imagen
+    widget: image
+    required: false
+  - label: Descripción de la imagen
+    name: imagen_alt
+    widget: string
+    required: false
+  - label: DOI
+    name: doi
+    widget: string
+    required: false
+    hint: 'Ej: 10.1016/j.xxxx.2024.01.001 (sin https://doi.org/).'
+  - label: Enlace
+    name: enlace
+    widget: string
+    required: false
+    hint: URL a la publicación, repositorio o editorial. Si está vacío se usa el DOI.
+  - label: Archivo PDF (si la licencia lo permite)
+    name: pdf
+    widget: file
+    required: false
+  - label: Destacada
+    name: destacado
+    widget: boolean
+    default: false
+    required: false
+  - label: Orden (dentro del mismo año)
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+  - label: Texto adicional
+    name: body
+    widget: markdown
+    required: false
+- name: equipo
+  label: Equipo
+  label_singular: Integrante
+  folder: content/equipo
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: nombre
+  summary: '{{nombre}} · {{cargo}}'
+  editor:
+    preview: false
+  fields:
+  - label: Nombre
+    name: nombre
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+  - label: Foto
+    name: foto
+    widget: image
+    required: false
+  - label: Descripción de la foto
+    name: foto_alt
+    widget: string
+    required: false
+  - label: Profesión / cargo
+    name: cargo
+    widget: string
+    required: false
+  - label: Breve descripción
+    name: descripcion
+    widget: text
+    required: false
+  - label: Enlaces
+    name: enlaces
+    widget: list
+    required: false
+    fields:
+    - label: 'Texto (ej: ORCID, Google Scholar, LinkedIn)'
+      name: etiqueta
+      widget: string
+    - label: URL
+      name: url
+      widget: string
+  - label: Publicaciones destacadas (texto libre)
+    name: publicaciones_texto
+    widget: markdown
+    required: false
+    hint: Opcional. Las publicaciones cargadas en el CMS y vinculadas a esta persona se listan solas.
+  - label: Orden
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+  - label: Trayectoria
+    name: body
+    widget: markdown
+    required: false
+- name: proyectos
+  label: Proyectos
+  label_singular: Proyecto
+  folder: content/proyectos
+  create: true
+  extension: md
+  format: frontmatter
+  slug: '{{slug}}'
+  identifier_field: nombre
+  summary: '{{nombre}} · {{anio}}'
+  editor:
+    preview: false
+  fields:
+  - label: Nombre
+    name: nombre
+    widget: string
+  - label: Slug (dirección web)
+    name: slug
+    widget: string
+    required: false
+  - label: Descripción breve
+    name: descripcion
+    widget: text
+    required: false
+  - label: Integrantes del equipo
+    name: integrantes
+    widget: relation
+    collection: equipo
+    search_fields:
+    - nombre
+    value_field: '{{slug}}'
+    display_fields:
+    - nombre
+    multiple: true
+    required: false
+  - label: Otras personas participantes
+    name: participantes
+    widget: string
+    required: false
+    hint: Texto libre.
+  - label: Institución
+    name: institucion
+    widget: string
+    required: false
+  - label: Año
+    name: anio
+    widget: string
+    required: false
+    hint: 'Ej: 2024 o 2022–2025'
+  - label: Estado
+    name: estado
+    widget: select
+    required: false
+    options:
+    - En curso
+    - Finalizado
+    - En preparación
+  - label: Enlace
+    name: enlace
+    widget: string
+    required: false
+  - label: Imagen
+    name: imagen
+    widget: image
+    required: false
+  - label: Descripción de la imagen
+    name: imagen_alt
+    widget: string
+    required: false
+  - label: Orden
+    name: orden
+    widget: number
+    default: 10
+    value_type: int
+    required: false
+  - label: Visible en la web
+    name: visible
+    widget: boolean
+    default: true
+    required: false
+  - label: Descripción completa
+    name: body
+    widget: markdown
+    required: false
+- name: paginas
+  label: Páginas generales
+  label_singular: Página
+  editor:
+    preview: false
+  files:
+  - name: home
+    label: Inicio
+    file: content/pages/home.json
+    fields:
+    - label: Etiqueta del encabezado
+      name: hero_etiqueta
+      widget: string
+    - label: Texto del encabezado
+      name: hero_texto
+      widget: text
+    - label: Nota manuscrita
+      name: hero_nota
+      widget: string
+      required: false
+    - label: Botón 1 · texto
+      name: boton_1_texto
+      widget: string
+    - label: Botón 1 · enlace
+      name: boton_1_url
+      widget: string
+    - label: Botón 2 · texto
+      name: boton_2_texto
+      widget: string
+    - label: Botón 2 · enlace
+      name: boton_2_url
+      widget: string
+    - label: Idea central · título
+      name: idea_titulo
+      widget: string
+    - label: Idea central · texto
+      name: idea_texto
+      widget: text
+    - label: Grandes áreas
+      name: areas
+      widget: list
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Texto
+        name: texto
+        widget: string
+      - label: Enlace
+        name: url
+        widget: string
+      - label: Dibujo
+        name: icono
+        widget: select
+        options:
+        - formacion
+        - materiales
+        - experiencias
+        - publicaciones
+        - recursos
+    - label: Quiénes somos · título
+      name: quienes_titulo
+      widget: string
+    - label: Quiénes somos · texto
+      name: quienes_texto
+      widget: text
+  - name: secciones
+    label: Títulos e introducciones de secciones
+    file: content/pages/secciones.json
+    fields:
+    - label: Formación
+      name: formacion
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Cursos
+      name: cursos
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Masterclasses
+      name: masterclasses
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Materiales
+      name: materiales
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Experiencias
+      name: experiencias
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Publicaciones
+      name: publicaciones
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Recursos gratuitos
+      name: recursos
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Proyectos
+      name: proyectos
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+    - label: Catálogo completo
+      name: catalogo
+      widget: object
+      collapsed: true
+      fields:
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Bajada
+        name: bajada
+        widget: string
+        required: false
+      - label: Introducción
+        name: intro
+        widget: markdown
+        required: false
+  - name: quienes
+    label: Quiénes somos
+    file: content/pages/quienes-somos.md
+    fields:
+    - label: Título
+      name: titulo
+      widget: string
+    - label: Bajada
+      name: bajada
+      widget: string
+      required: false
+    - label: Imagen
+      name: imagen
+      widget: image
+      required: false
+    - label: Presentación
+      name: body
+      widget: markdown
+  - name: cuenta
+    label: Mi cuenta
+    file: content/pages/mi-cuenta.md
+    fields:
+    - label: Título
+      name: titulo
+      widget: string
+    - label: Bajada
+      name: bajada
+      widget: string
+      required: false
+    - label: Texto
+      name: body
+      widget: markdown
+  - name: legal
+    label: Aviso legal
+    file: content/pages/aviso-legal.md
+    fields:
+    - label: Título
+      name: titulo
+      widget: string
+    - label: Bajada
+      name: bajada
+      widget: string
+      required: false
+    - label: Texto
+      name: body
+      widget: markdown
+  - name: privacidad
+    label: Privacidad
+    file: content/pages/privacidad.md
+    fields:
+    - label: Título
+      name: titulo
+      widget: string
+    - label: Bajada
+      name: bajada
+      widget: string
+      required: false
+    - label: Texto
+      name: body
+      widget: markdown
+- name: configuracion
+  label: Configuración del sitio
+  editor:
+    preview: false
+  files:
+  - name: sitio
+    label: Configuración general
+    file: content/settings/site.json
+    fields:
+    - label: Nombre
+      name: nombre
+      widget: string
+    - label: Tagline
+      name: tagline
+      widget: string
+    - label: Frase del proyecto
+      name: frase
+      widget: text
+    - label: Título para buscadores (SEO)
+      name: titulo_seo
+      widget: string
+    - label: Descripción para buscadores (SEO)
+      name: descripcion_seo
+      widget: text
+    - label: Dirección del sitio
+      name: url_sitio
+      widget: string
+      required: false
+      hint: 'Ej: https://adncognitivo.netlify.app o tu dominio propio. Si queda vacío se usa la de Netlify.'
+    - label: Logo
+      name: logo
+      widget: image
+    - label: Logo para fondo oscuro
+      name: logo_oscuro
+      widget: image
+    - label: Favicon (SVG o PNG cuadrado)
+      name: favicon
+      widget: image
+    - label: Imagen para compartir en redes (1200×630)
+      name: imagen_og
+      widget: image
+    - label: Email de contacto
+      name: email
+      widget: string
+      required: false
+    - label: Instagram (URL)
+      name: instagram
+      widget: string
+      required: false
+    - label: LinkedIn (URL)
+      name: linkedin
+      widget: string
+      required: false
+    - label: Otras redes
+      name: otras_redes
+      widget: list
+      required: false
+      fields:
+      - label: Nombre
+        name: nombre
+        widget: string
+      - label: URL
+        name: url
+        widget: string
+    - label: Texto del pie de página
+      name: footer_texto
+      widget: text
+    - label: Nota del pie (opcional)
+      name: footer_nota
+      widget: string
+      required: false
+    - label: Venta
+      name: venta
+      widget: object
+      fields:
+      - label: Plataforma de venta
+        name: plataforma
+        widget: string
+        hint: 'Ej: Payhip. Solo informativo.'
+      - label: Texto del botón de compra
+        name: texto_comprar
+        widget: string
+        default: Comprar
+      - label: Enlace para 'Mi cuenta' (opcional)
+        name: url_cuenta
+        widget: string
+        required: false
+        hint: Por ejemplo, la página de tu tienda en Payhip.
+      - label: Abrir el checkout en una pestaña nueva
+        name: abrir_en_nueva_pestana
+        widget: boolean
+        default: true
+    - label: Suscripción por email (futuro)
+      name: suscripcion
+      widget: object
+      collapsed: true
+      fields:
+      - label: Activar formulario
+        name: activa
+        widget: boolean
+        default: false
+      - label: Título
+        name: titulo
+        widget: string
+      - label: Texto
+        name: texto
+        widget: text
+      - label: Modo
+        name: modo
+        widget: select
+        options:
+        - label: Formularios de Netlify (gratis, sin otra cuenta)
+          value: netlify
+        - label: Formulario externo (Mailchimp, MailerLite, Brevo…)
+          value: externo
+      - label: URL del formulario externo
+        name: url_externa
+        widget: string
+        required: false

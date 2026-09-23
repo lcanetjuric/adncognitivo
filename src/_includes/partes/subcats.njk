@@ -1,0 +1,5 @@
+<nav class="subcats" aria-label="Tipos de publicación">
+  {%- for clave, def in contenido.tiposPublicacion %}
+  <a class="subcat" href="{{ def.ruta }}"{% if page.url == def.ruta %} aria-current="page"{% endif %}><span class="subcat__nombre">{{ def.plural }}</span><span class="subcat__num">{{ contenido.publicacionesPorTipo[clave].length }}</span></a>
+  {%- endfor %}
+</nav>

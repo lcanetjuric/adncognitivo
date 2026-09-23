@@ -1,0 +1,29 @@
+---
+layout: base.njk
+---
+{#- Página de listado de productos.
+    Front matter: seccionClave, items (ruta en contenido), dibujo, subnav, vista ("fichas"|"renglones"), conTipo -#}
+{%- from "macros.njk" import ficha, renglon, filtros, vacio -%}
+{%- set sec = contenido.paginas.secciones[seccionClave] -%}
+{%- set items = contenido[itemsClave] -%}
+{%- set cab = { titulo: sec.titulo, bajada: sec.bajada, miga: miga, dib: dibujo, subnav: subnav } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion" aria-label="{{ sec.titulo }}">
+  <div class="contenedor">
+    {% if sec.intro %}<div class="prosa" style="margin-bottom:3rem">{{ sec.intro | md | safe }}</div>{% endif %}
+    {{ content | safe }}
+    {%- if items.length %}
+    <div data-filtrable>
+      {{ filtros(items, conTipo, contenido.tiposProducto) }}
+      {%- if vista == "renglones" %}
+      <ul class="renglones" data-lista>{% for p in items %}{{ renglon(p) }}{% endfor %}</ul>
+      {%- else %}
+      <div class="fichas" data-lista>{% for p in items %}{{ ficha(p, "marco" if loop.index is odd else "marco marco--2") }}{% endfor %}</div>
+      {%- endif %}
+      <p class="sin-resultados" data-sin-resultados hidden>No hay resultados con esos filtros. <button type="button" class="filtros__limpiar" data-limpiar>Quitar filtros</button></p>
+    </div>
+    {%- else %}
+    {{ vacio(vacioTitulo or "Todavía no hay contenido publicado en esta sección.", vacioTexto or "", dibujo or "pregunta") }}
+    {%- endif %}
+  </div>
+</section>

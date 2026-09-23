@@ -1,0 +1,73 @@
+---
+layout: base.njk
+pagination:
+  data: contenido.productos
+  size: 1
+  alias: p
+permalink: "{{ p.url }}"
+eleventyComputed:
+  titulo: "{{ p.titulo }}"
+  descripcion: "{{ p.descripcion }}"
+  imagen: "{{ p.imagen }}"
+---
+{%- from "macros.njk" import dib, boton, portada, etiquetaEstado, ficha, tituloPartido -%}
+{%- set def = contenido.tiposProducto[p.tipo] -%}
+{%- set miga = [{ texto: "Formación", url: "/formacion/" }, { texto: def.plural, url: def.ruta }, { texto: p.titulo }] if (p.tipo == "curso" or p.tipo == "masterclass") else [{ texto: def.plural, url: def.ruta }, { texto: p.titulo }] -%}
+{%- set cab = { titulo: p.titulo, tituloHtml: tituloPartido(p.titulo), bajada: p.descripcion, miga: miga } -%}
+{% include "partes/cabeza.njk" %}
+
+{#- Datos estructurados -#}
+{%- if p.tipo == "curso" or p.tipo == "masterclass" %}
+<script type="application/ld+json">{{ { "@context": "https://schema.org", "@type": "Course", "name": p.titulo, "description": p.descripcion, "provider": { "@type": "Organization", "name": sitio.nombre, "url": sitio.url or null } } | json | safe }}</script>
+{%- endif %}
+
+<section class="seccion">
+  <div class="contenedor detalle">
+    <div>
+      <div class="detalle__visual">{{ portada(p) }}</div>
+      <div class="fila-acciones" style="margin-bottom:2rem">
+        <span class="sticker">{{ p.tipo_etiqueta }}</span>
+        {% if p.categoria and p.categoria != p.tipo_etiqueta %}<span class="sticker sticker--contorno sticker--der">{{ p.categoria }}</span>{% endif %}
+        {{ etiquetaEstado(p) }}
+      </div>
+      {%- if p.descripcion_larga %}
+      <div class="prosa">{{ p.descripcion_larga | safe }}</div>
+      {%- else %}
+      <div class="prosa"><p>{{ p.descripcion }}</p><p class="pendiente">Más información sobre esta propuesta, próximamente.</p></div>
+      {%- endif %}
+    </div>
+
+    <aside class="detalle__ficha marco" aria-label="Ficha">
+      <dl>
+        <dt>Tipo</dt><dd>{{ p.tipo_etiqueta }}</dd>
+        {% if p.categoria and p.categoria != p.tipo_etiqueta %}<dt>Categoría</dt><dd>{{ p.categoria }}</dd>{% endif %}
+        {% if p.tipo == "curso" or p.tipo == "masterclass" %}
+        <dt>Modalidad</dt><dd>{{ p.modalidad or "A confirmar" }}</dd>
+        <dt>Duración</dt><dd>{{ p.duracion or "A confirmar" }}</dd>
+        {% if p.fechas %}<dt>Fechas</dt><dd>{{ p.fechas }}</dd>{% endif %}
+        {% endif %}
+        {% if p.formato %}<dt>Formato</dt><dd>{{ p.formato }}</dd>{% endif %}
+        {% if p.publico.length %}<dt>Público</dt><dd>{{ p.publico | join(", ") }}</dd>{% endif %}
+        {% if p.tema.length %}<dt>Temas</dt><dd>{{ p.tema | join(", ") }}</dd>{% endif %}
+        <dt>Precio</dt><dd>{{ p.precio_texto or "A confirmar" }}</dd>
+        <dt>Estado</dt><dd>{{ { disponible: "Disponible", proximamente: "Próximamente", finalizado: "No disponible" }[p.estado] }}</dd>
+      </dl>
+      {{ boton(p.accion) }}
+      {%- if p.accion.tipo == "comprar" %}
+      <p class="detalle__nota">El pago se realiza de forma segura en {{ p.accion.plataforma or "una plataforma externa" }}. El acceso llega por email.</p>
+      {%- elif p.tipo == "experiencia" and p.url_acceso %}
+      <p class="detalle__nota">La experiencia se abre en una pestaña nueva, en su dirección original ({{ p.url_acceso | dominio }}).</p>
+      {%- endif %}
+    </aside>
+  </div>
+</section>
+
+{%- set relacionados = contenido.productos | rejectattr("url", "equalto", p.url) | selectattr("tipo", "equalto", p.tipo) %}
+{%- if relacionados.length %}
+<section class="seccion">
+  <div class="contenedor">
+    <header class="encabezado"><span class="encabezado__num" aria-hidden="true">+</span><div><h2 class="encabezado__titulo" style="font-size:clamp(2rem,4vw,3rem)">También en {{ def.plural | lower }}</h2></div></header>
+    <div class="fichas">{% for r in relacionados.slice(0, 3) %}{{ ficha(r) }}{% endfor %}</div>
+  </div>
+</section>
+{%- endif %}

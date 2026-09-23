@@ -1,0 +1,34 @@
+{%- from "macros.njk" import dib -%}
+<header class="cabecera">
+  <div class="contenedor cabecera__fila">
+    <a class="cabecera__logo" href="/" aria-label="{{ sitio.nombre }} — inicio">
+      <img src="{{ sitio.logo }}" alt="{{ sitio.nombre }}" width="230" height="46">
+    </a>
+    <nav class="nav" id="nav-principal" aria-label="Principal">
+      <ul class="nav__lista">
+        {%- for item in navegacion %}
+        {%- set actual = (page.url == item.url) or (item.url != "/" and page.url.startsWith(item.url)) %}
+        <li class="nav__item">
+          <a class="nav__enlace{% if actual %} es-actual{% endif %}" href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>
+            {{ item.texto }}
+          </a>
+          {%- if item.sub %}
+          <ul class="nav__sub">
+            {%- for s in item.sub %}
+            <li><a href="{{ s.url }}"{% if page.url == s.url %} aria-current="page"{% endif %}>{{ s.texto }}</a></li>
+            {%- endfor %}
+          </ul>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+    </nav>
+    <div class="utiles">
+      <a class="icono-boton" href="/buscar/" aria-label="Buscar" title="Buscar">{{ dib("buscar") }}</a>
+      <a class="icono-boton" href="/mi-cuenta/" aria-label="Mi cuenta" title="Mi cuenta">{{ dib("cuenta") }}</a>
+      <button class="icono-boton menu-movil" type="button" aria-controls="nav-principal" aria-expanded="false" aria-label="Abrir menú">
+        <span class="menu-movil__abrir">{{ dib("menu") }}</span>
+      </button>
+    </div>
+  </div>
+</header>

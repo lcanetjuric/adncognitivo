@@ -1,0 +1,172 @@
+{#- ============================================================
+    Piezas reutilizables de ADNCognitivo
+    ============================================================ -#}
+
+{%- macro dib(id, clase="") -%}
+<svg class="dib {{ clase }}" aria-hidden="true" focusable="false"><use href="#d-{{ id }}"/></svg>
+{%- endmacro -%}
+
+{%- macro dibTipo(tipo) -%}
+{%- set mapa = { curso: "area-formacion", masterclass: "area-formacion", material: "area-materiales", experiencia: "area-experiencias", recurso: "area-recursos", libro: "area-publicaciones", capitulo: "area-publicaciones", articulo: "area-publicaciones", otra: "area-publicaciones" } -%}
+{{ mapa[tipo] or "asterisco" }}
+{%- endmacro -%}
+
+{#- Botón de acción de un producto (comprar / acceder / descargar / explorar / próximamente) -#}
+{%- macro boton(a, clase="") -%}
+{%- if a.href -%}
+<a class="boton {{ clase }}" href="{{ a.href }}"{% if a.nuevaPestana %} target="_blank" rel="noopener"{% endif %}{% if a.descarga %} download{% endif %} data-accion="{{ a.tipo }}">
+  {{ a.texto }}
+  {%- if a.tipo == "descargar" %}{{ dib("descarga") }}{% elif a.externo %}{{ dib("externo") }}{% endif -%}
+  {%- if a.nuevaPestana %}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span>{% endif -%}
+</a>
+{%- else -%}
+<span class="boton boton--inactivo {{ clase }}" aria-disabled="true">{{ a.texto }}</span>
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Título partido: lo que va antes de " — " en negrita y el resto liviano -#}
+{%- macro tituloPartido(t) -%}
+{%- set partes = t.split(" — ") -%}
+{%- if partes.length > 1 -%}{{ partes[0] }}<span class="liviano">{{ partes.slice(1).join(" — ") }}</span>{%- else -%}{{ t }}{%- endif -%}
+{%- endmacro -%}
+
+{#- Portada: imagen cargada o portada tipográfica automática -#}
+{%- macro portada(p) -%}
+{%- if p.imagen -%}
+<img src="{{ p.imagen }}" alt="{{ p.imagen_alt or '' }}" loading="lazy" width="800" height="500">
+{%- else -%}
+{%- set variante = { masterclass: "portada--oscura", experiencia: "portada--teal", recurso: "portada--coral" } -%}
+<div class="portada {{ variante[p.tipo] }}" aria-hidden="true">
+  {{ dib(dibTipo(p.tipo) | trim, "portada__dib") }}
+  <span class="portada__tipo">{{ p.tipo_etiqueta }}</span>
+  <span class="portada__titulo">{{ tituloPartido(p.titulo) }}</span>
+</div>
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro etiquetaEstado(p) -%}
+{%- if p.estado == "proximamente" -%}<span class="sticker sticker--coral sticker--der">Próximamente</span>
+{%- elif p.estado == "finalizado" -%}<span class="sticker sticker--gris sticker--der">Finalizado</span>
+{%- elif p.gratuito -%}<span class="sticker sticker--teal sticker--der">Gratuito</span>
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Ficha de producto -#}
+{%- macro ficha(p, marco="marco") -%}
+<article class="ficha {{ marco }}" data-item data-tipo="{{ p.tipo }}" data-tema="{{ p.tema | slugs }}" data-publico="{{ p.publico | slugs }}">
+  <div class="ficha__etiquetas">
+    <span class="sticker">{{ p.categoria if (p.categoria and p.tipo == 'material') else p.tipo_etiqueta }}</span>
+    {{ etiquetaEstado(p) }}
+  </div>
+  <div class="ficha__portada">{{ portada(p) }}</div>
+  <div class="ficha__cuerpo">
+    <h3 class="ficha__titulo"><a href="{{ p.url }}">{{ p.titulo }}</a></h3>
+    {% if p.descripcion %}<p class="ficha__desc">{{ p.descripcion }}</p>{% endif %}
+    {%- if p.modalidad or p.duracion or p.formato or p.publico.length %}
+    <ul class="ficha__meta">
+      {% if p.modalidad %}<li><b>Modalidad</b> {{ p.modalidad }}</li>{% endif %}
+      {% if p.duracion %}<li><b>Duración</b> {{ p.duracion }}</li>{% endif %}
+      {% if p.formato %}<li><b>Formato</b> {{ p.formato }}</li>{% endif %}
+      {% if p.publico.length %}<li><b>Público</b> {{ p.publico | join(", ") }}</li>{% endif %}
+    </ul>
+    {%- endif %}
+    {% if p.tema.length %}<p class="ficha__temas" aria-label="Temas">{% for t in p.tema %}<span>{{ t }}</span>{% endfor %}</p>{% endif %}
+    <div class="ficha__pie">
+      {% if p.precio_texto %}<span class="ficha__precio">{{ p.precio_texto }}</span>{% else %}<a class="enlace-flecha" href="{{ p.url }}" tabindex="-1" aria-hidden="true"><span>Ver más</span></a>{% endif %}
+      {{ boton(p.accion, "boton--chico") }}
+    </div>
+  </div>
+</article>
+{%- endmacro -%}
+
+{#- Renglón de lista editorial -#}
+{%- macro renglon(p) -%}
+<li class="renglon" data-item data-tipo="{{ p.tipo }}" data-tema="{{ p.tema | slugs }}" data-publico="{{ p.publico | slugs }}">
+  {{ dib(dibTipo(p.tipo) | trim, "renglon__dib") }}
+  <div>
+    <h3 class="renglon__titulo"><a href="{{ p.url }}">{{ p.titulo }}</a></h3>
+    {% if p.descripcion %}<p class="renglon__desc">{{ p.descripcion }}</p>{% endif %}
+    <div class="renglon__meta">
+      {% if p.categoria %}<span class="sticker sticker--contorno sticker--recto">{{ p.categoria }}</span>{% endif %}
+      {% for t in p.tema %}<span class="sticker sticker--gris sticker--recto">{{ t }}</span>{% endfor %}
+      {{ etiquetaEstado(p) }}
+    </div>
+  </div>
+  <div class="renglon__accion">{{ boton(p.accion, "boton--chico") }}</div>
+</li>
+{%- endmacro -%}
+
+{#- Publicación en formato de referencia -#}
+{%- macro pub(p) -%}
+<li class="pub">
+  <span class="pub__anio">{{ p.anio or "s/f" }}</span>
+  <div>
+    <span class="sticker sticker--contorno sticker--recto">{{ p.subtipo or p.tipo_etiqueta }}</span>
+    <h3 class="pub__titulo mt-1"><a href="{{ p.url }}">{{ p.titulo }}</a></h3>
+    {% if p.autores_texto %}<p class="pub__autores">{{ p.autores_texto }}</p>{% endif %}
+    {%- set fuente = [p.revista, p.libro and ("En " + p.libro), p.editorial, p.volumen and ("vol. " + p.volumen), p.numero and ("n.º " + p.numero), p.paginas and ("pp. " + p.paginas)] | select | join(", ") %}
+    {% if fuente %}<p class="pub__fuente">{{ fuente }}</p>{% endif %}
+  </div>
+  <div class="pub__enlaces">
+    {% if p.pdf %}<a class="boton boton--chico boton--contorno" href="{{ p.pdf }}" download>PDF{{ dib("descarga") }}</a>{% endif %}
+    {% if p.enlace %}<a class="boton boton--chico boton--contorno" href="{{ p.enlace }}" target="_blank" rel="noopener">{{ "Ver" if p.enlace_propio else "DOI" }}{{ dib("externo") }}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>{% endif %}
+  </div>
+</li>
+{%- endmacro -%}
+
+{#- Encabezado de sección de la home -#}
+{%- macro encabezado(num, titulo, bajada="", url="", texto="") -%}
+<header class="encabezado">
+  <span class="encabezado__num" aria-hidden="true">{{ num }}</span>
+  <div>
+    <h2 class="encabezado__titulo">{{ titulo }}</h2>
+    {% if bajada %}<p class="encabezado__bajada">{{ bajada }}</p>{% endif %}
+  </div>
+  {% if url %}<a class="enlace-flecha encabezado__accion" href="{{ url }}"><span>{{ texto }}</span>{{ dib("flecha") }}</a>{% endif %}
+</header>
+{%- endmacro -%}
+
+{#- Estado vacío dibujado -#}
+{%- macro vacio(titulo, texto="", icono="pregunta", nota="") -%}
+<div class="vacio marco marco--2">
+  {{ dib(icono, "vacio__dib") }}
+  <div>
+    <p class="vacio__titulo pesado">{{ titulo }}</p>
+    {% if texto %}<p>{{ texto }}</p>{% endif %}
+    {% if nota %}<p class="mano">{{ nota }}</p>{% endif %}
+  </div>
+</div>
+{%- endmacro -%}
+
+{#- Filtros (tipo / tema / público). Solo muestra valores presentes. -#}
+{%- macro filtros(items, conTipo=false, tipos={}) -%}
+{%- set temas = items | valoresFiltro("tema", ["Cognición", "Desarrollo", "Aprendizaje", "Funciones ejecutivas", "Memoria", "Metacognición", "Evaluación"]) -%}
+{%- set publicos = items | valoresFiltro("publico", ["Salud", "Educación", "Investigación", "Profesionales"]) -%}
+{%- set tiposPres = items | valoresFiltro("tipo", ["curso", "masterclass", "material", "experiencia", "recurso"]) -%}
+{%- if items.length > 1 and (temas.length or publicos.length or (conTipo and tiposPres.length > 1)) -%}
+<div class="filtros" data-filtros>
+  {%- if conTipo and tiposPres.length > 1 %}
+  <fieldset class="filtros__grupo" data-grupo="tipo">
+    <legend>Tipo</legend>
+    {% for t in tiposPres %}<button type="button" class="chip" aria-pressed="false" data-valor="{{ t }}">{{ tipos[t].etiqueta }}</button>{% endfor %}
+  </fieldset>
+  {%- endif %}
+  {%- if temas.length %}
+  <fieldset class="filtros__grupo" data-grupo="tema">
+    <legend>Tema</legend>
+    {% for t in temas %}<button type="button" class="chip" aria-pressed="false" data-valor="{{ t | slug }}">{{ t }}</button>{% endfor %}
+  </fieldset>
+  {%- endif %}
+  {%- if publicos.length %}
+  <fieldset class="filtros__grupo" data-grupo="publico">
+    <legend>Público</legend>
+    {% for t in publicos %}<button type="button" class="chip" aria-pressed="false" data-valor="{{ t | slug }}">{{ t }}</button>{% endfor %}
+  </fieldset>
+  {%- endif %}
+  <div class="filtros__estado" aria-live="polite">
+    <span data-contador>{{ items.length }} resultados</span>
+    <button type="button" class="filtros__limpiar" data-limpiar hidden>Quitar filtros</button>
+  </div>
+</div>
+{%- endif -%}
+{%- endmacro -%}

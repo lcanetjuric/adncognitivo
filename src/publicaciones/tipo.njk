@@ -1,0 +1,27 @@
+---
+layout: base.njk
+pagination:
+  data: contenido.tiposPublicacion
+  size: 1
+  alias: clave
+permalink: "{{ contenido.tiposPublicacion[clave].ruta }}"
+eleventyComputed:
+  titulo: "{{ contenido.tiposPublicacion[clave].plural }}"
+  descripcion: "{{ contenido.tiposPublicacion[clave].plural }} del equipo de ADNCognitivo."
+---
+{%- from "macros.njk" import pub, vacio -%}
+{%- set def = contenido.tiposPublicacion[clave] -%}
+{%- set lista = contenido.publicacionesPorTipo[clave] -%}
+{%- set cab = { titulo: def.plural, miga: [{ texto: "Publicaciones", url: "/publicaciones/" }, { texto: def.plural }], dib: "area-publicaciones" } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor">
+    {% include "partes/subcats.njk" %}
+    {%- if lista.length %}
+    <ul class="pub-lista">{% for p in lista %}{{ pub(p) }}{% endfor %}</ul>
+    {%- else %}
+    {{ vacio("Todavía no hay " + (def.plural | lower) + " cargados.", "Se van a listar acá a medida que se incorporen.", "area-publicaciones") }}
+    {%- endif %}
+    <p class="mt-3"><a class="boton boton--contorno" href="/publicaciones/">Ver todas las publicaciones</a></p>
+  </div>
+</section>

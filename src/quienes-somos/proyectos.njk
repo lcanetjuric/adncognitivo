@@ -1,0 +1,35 @@
+---
+layout: base.njk
+permalink: /quienes-somos/proyectos/
+titulo: Proyectos
+descripcion: Proyectos de formación, investigación y desarrollo de recursos de ADNCognitivo.
+---
+{%- from "macros.njk" import vacio, dib -%}
+{%- set secp = contenido.paginas.secciones.proyectos -%}
+{%- set cab = { titulo: secp.titulo, bajada: secp.bajada, miga: [{ texto: "Quiénes somos", url: "/quienes-somos/" }, { texto: "Proyectos" }], dib: "area-proyectos" } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor">
+    {% if secp.intro %}<div class="prosa" style="margin-bottom:3rem">{{ secp.intro | md | safe }}</div>{% endif %}
+    {%- if contenido.proyectos.length %}
+    <div class="fichas">
+      {%- for pr in contenido.proyectos %}
+      <article class="ficha {{ 'marco' if loop.index is odd else 'marco marco--2' }}">
+        <div class="ficha__etiquetas">{% if pr.estado %}<span class="sticker">{{ pr.estado }}</span>{% endif %}{% if pr.anio %}<span class="sticker sticker--contorno sticker--der">{{ pr.anio }}</span>{% endif %}</div>
+        <div class="ficha__portada">
+          {% if pr.imagen %}<img src="{{ pr.imagen }}" alt="{{ pr.imagen_alt or '' }}" loading="lazy">{% else %}
+          <div class="portada" aria-hidden="true">{{ dib("area-proyectos", "portada__dib") }}<span class="portada__tipo">Proyecto</span><span class="portada__titulo">{{ pr.nombre }}</span></div>{% endif %}
+        </div>
+        <div class="ficha__cuerpo">
+          <h2 class="ficha__titulo"><a href="{{ pr.url }}">{{ pr.nombre }}</a></h2>
+          {% if pr.descripcion %}<p class="ficha__desc">{{ pr.descripcion }}</p>{% endif %}
+          {% if pr.institucion %}<ul class="ficha__meta"><li><b>Institución</b> {{ pr.institucion }}</li></ul>{% endif %}
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    {{ vacio("Los proyectos se van a presentar en esta sección.", "Cada proyecto tendrá su descripción, equipo, institución, año, estado y enlace.", "area-proyectos") }}
+    {%- endif %}
+  </div>
+</section>

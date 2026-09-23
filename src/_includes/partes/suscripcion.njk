@@ -1,0 +1,19 @@
+{#- Formulario de suscripción (se activa desde Configuración del sitio → Suscripción) -#}
+{%- set s = sitio.suscripcion -%}
+<aside class="suscripcion marco" aria-labelledby="suscripcion-titulo" style="margin:0 0 4rem">
+  <div>
+    <h2 id="suscripcion-titulo" style="font-size:1.8rem">{{ s.titulo }}</h2>
+    <p style="margin:.6rem 0 0">{{ s.texto }}</p>
+  </div>
+  {%- if s.modo == "externo" and s.url_externa %}
+  <p><a class="boton" href="{{ s.url_externa }}" target="_blank" rel="noopener">Suscribirme</a></p>
+  {%- else %}
+  <form name="suscripcion" method="POST" data-netlify="true" netlify-honeypot="empresa" action="/gracias/">
+    <input type="hidden" name="form-name" value="suscripcion">
+    <p hidden><label>No completar: <input name="empresa"></label></p>
+    <label class="visualmente-oculto" for="email-suscripcion">Email</label>
+    <input id="email-suscripcion" type="email" name="email" required autocomplete="email" placeholder="tu@email.com">
+    <button class="boton" type="submit">Suscribirme</button>
+  </form>
+  {%- endif %}
+</aside>

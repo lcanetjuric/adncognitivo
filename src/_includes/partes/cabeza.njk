@@ -1,0 +1,22 @@
+{#- Cabecera de página interior. Variables: cab = { titulo, bajada, miga: [{texto,url}], dib, subnav: [{texto,url}] } -#}
+{%- from "macros.njk" import dib -%}
+<header class="cabeza-pagina">
+  <div class="contenedor">
+    {%- if cab.miga %}
+    <nav class="cabeza-pagina__miga" aria-label="Ruta">
+      <a href="/">Inicio</a>
+      {%- for m in cab.miga %}<span aria-hidden="true">/</span>{% if m.url %}<a href="{{ m.url }}">{{ m.texto }}</a>{% else %}<span aria-current="page">{{ m.texto }}</span>{% endif %}{% endfor %}
+    </nav>
+    {%- endif %}
+    <h1 class="cabeza-pagina__titulo">{{ cab.tituloHtml or cab.titulo }}</h1>
+    {% if cab.bajada %}<p class="cabeza-pagina__bajada">{{ cab.bajada }}</p>{% endif %}
+    {%- if cab.subnav %}
+    <nav class="cabeza-pagina__subnav" aria-label="Secciones">
+      {%- for s in cab.subnav %}
+      <a class="boton boton--chico {{ '' if page.url == s.url else 'boton--contorno' }}" href="{{ s.url }}"{% if page.url == s.url %} aria-current="page"{% endif %}>{{ s.texto }}</a>
+      {%- endfor %}
+    </nav>
+    {%- endif %}
+  </div>
+  {% if cab.dib %}{{ dib(cab.dib, "cabeza-pagina__dib gira-2") }}{% endif %}
+</header>

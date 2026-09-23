@@ -1,0 +1,55 @@
+{%- set tituloPagina = (titulo + " · " + sitio.nombre) if (titulo and not esInicio) else sitio.titulo_seo -%}
+{%- set descPagina = (descripcion | sinHtml | recortar(158)) if descripcion else sitio.descripcion_seo -%}
+{%- set imagenOg = (imagen or sitio.imagen_og) | abs(sitio.url) -%}
+{%- set canonica = sitio.url + page.url -%}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ tituloPagina }}</title>
+  <meta name="description" content="{{ descPagina }}">
+  {% if sitio.url %}<link rel="canonical" href="{{ canonica }}">{% endif %}
+  <meta property="og:type" content="{{ ogTipo or 'website' }}">
+  <meta property="og:site_name" content="{{ sitio.nombre }}">
+  <meta property="og:title" content="{{ tituloPagina }}">
+  <meta property="og:description" content="{{ descPagina }}">
+  {% if sitio.url %}<meta property="og:url" content="{{ canonica }}">{% endif %}
+  <meta property="og:image" content="{{ imagenOg }}">
+  <meta property="og:locale" content="es_AR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#F7F4EC">
+  <link rel="icon" href="{{ sitio.favicon or '/favicon.svg' }}" type="image/svg+xml">
+  <link rel="icon" href="/assets/img/marca/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/marca/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/outfit-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  {%- if esInicio %}
+  <script type="application/ld+json">{{ {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": sitio.nombre,
+    "description": sitio.frase,
+    "url": sitio.url or null,
+    "logo": (sitio.logo | abs(sitio.url)),
+    "email": sitio.email or null,
+    "sameAs": [sitio.instagram, sitio.linkedin] | select
+  } | json | safe }}</script>
+  {%- endif %}
+  {%- if schema %}
+  <script type="application/ld+json">{{ schema | json | safe }}</script>
+  {%- endif %}
+</head>
+<body>
+  {% include "dibujos.svg" %}
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  {% include "partes/cabecera.njk" %}
+  <main id="contenido" tabindex="-1">
+    {{ content | safe }}
+  </main>
+  {% include "partes/pie.njk" %}
+  <script src="/assets/js/main.js" defer></script>
+  {% if scripts %}{% for s in scripts %}<script src="{{ s }}" defer></script>{% endfor %}{% endif %}
+</body>
+</html>

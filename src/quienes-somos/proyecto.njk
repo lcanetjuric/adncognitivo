@@ -1,0 +1,32 @@
+---
+layout: base.njk
+pagination:
+  data: contenido.proyectos
+  size: 1
+  alias: pr
+permalink: "{{ pr.url }}"
+eleventyComputed:
+  titulo: "{{ pr.nombre }}"
+  descripcion: "{{ pr.descripcion }}"
+  imagen: "{{ pr.imagen }}"
+---
+{%- from "macros.njk" import dib -%}
+{%- set cab = { titulo: pr.nombre, bajada: pr.descripcion, miga: [{ texto: "Quiénes somos", url: "/quienes-somos/" }, { texto: "Proyectos", url: "/quienes-somos/proyectos/" }, { texto: pr.nombre }] } -%}
+{% include "partes/cabeza.njk" %}
+<section class="seccion">
+  <div class="contenedor detalle">
+    <div>
+      {% if pr.imagen %}<div class="detalle__visual"><img src="{{ pr.imagen }}" alt="{{ pr.imagen_alt or '' }}"></div>{% endif %}
+      {% if pr.cuerpo_html %}<div class="prosa">{{ pr.cuerpo_html | safe }}</div>{% endif %}
+    </div>
+    <aside class="detalle__ficha marco" aria-label="Datos del proyecto">
+      <dl>
+        {% if pr.estado %}<dt>Estado</dt><dd>{{ pr.estado }}</dd>{% endif %}
+        {% if pr.anio %}<dt>Año</dt><dd>{{ pr.anio }}</dd>{% endif %}
+        {% if pr.institucion %}<dt>Institución</dt><dd>{{ pr.institucion }}</dd>{% endif %}
+        {% if pr.integrantes_equipo.length or pr.participantes %}<dt>Equipo</dt><dd>{% for m in pr.integrantes_equipo %}<a href="{{ m.url }}">{{ m.nombre }}</a>{% if not loop.last or pr.participantes %}, {% endif %}{% endfor %}{{ pr.participantes }}</dd>{% endif %}
+      </dl>
+      {% if pr.enlace %}<a class="boton" href="{{ pr.enlace }}" target="_blank" rel="noopener">Ver proyecto{{ dib("externo") }}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>{% endif %}
+    </aside>
+  </div>
+</section>
