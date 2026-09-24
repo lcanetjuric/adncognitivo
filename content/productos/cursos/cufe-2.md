@@ -18,7 +18,7 @@ moneda: ARS
 url_compra: https://mpago.la/2NwqHnX
 url_acceso: ""
 archivo: ""
-estado: proximamente
+estado: disponible
 destacado: true
 orden: 1
 visible: true
