@@ -53,7 +53,9 @@ eleventyComputed:
         <dt>Estado</dt><dd>{{ { disponible: "Disponible", proximamente: "Próximamente", finalizado: "No disponible" }[p.estado] }}</dd>
       </dl>
       {{ boton(p.accion) }}
-      {%- if p.accion.tipo == "comprar" %}
+      {%- if p.accion.tipo == "inscribirse" %}
+      <p class="detalle__nota">Primero completás tus datos y después pagás de forma segura en {{ p.accion.plataforma or "una plataforma externa" }}. El acceso te llega por email.</p>
+      {%- elif p.accion.tipo == "comprar" %}
       <p class="detalle__nota">El pago se realiza de forma segura en {{ p.accion.plataforma or "una plataforma externa" }}. El acceso llega por email.</p>
       {%- elif p.tipo == "experiencia" and p.url_acceso %}
       <p class="detalle__nota">La experiencia se abre en una pestaña nueva, en su dirección original ({{ p.url_acceso | dominio }}).</p>
@@ -61,6 +63,10 @@ eleventyComputed:
     </aside>
   </div>
 </section>
+
+{%- if p.accion.tipo == "inscribirse" %}
+{% include "partes/inscripcion.njk" %}
+{%- endif %}
 
 {%- set relacionados = contenido.productos | rejectattr("url", "equalto", p.url) | selectattr("tipo", "equalto", p.tipo) %}
 {%- if relacionados.length %}

@@ -1,0 +1,64 @@
+{#- Formulario de inscripción previo al pago (Netlify Forms, gratuito).
+    Los datos quedan en Netlify → Forms → "inscripcion" y llegan por email si se activa la notificación. -#}
+{%- set esFormacion = p.tipo == "curso" or p.tipo == "masterclass" -%}
+<section class="seccion seccion--gris" id="inscripcion" aria-labelledby="inscripcion-titulo">
+  <div class="contenedor dos-col">
+    <div>
+      <p class="encabezado__num" aria-hidden="true" style="margin-bottom:1rem">{{ "inscripción" if esFormacion else "compra" }}</p>
+      <h2 class="encabezado__titulo" id="inscripcion-titulo">{{ "Inscribirme" if esFormacion else "Comprar" }}</h2>
+      <p class="encabezado__bajada">{{ p.titulo }}{% if p.precio_texto %} · <strong>{{ p.precio_texto }}</strong>{% endif %}</p>
+      <ol class="pasos">
+        <li><span>1</span> Completás tus datos.</li>
+        <li><span>2</span> Pagás de forma segura en {{ p.accion.plataforma or "la plataforma de pago" }}.</li>
+        <li><span>3</span> Te escribimos al email que indiques con {{ "el acceso" if esFormacion else "el material" }}.</li>
+      </ol>
+    </div>
+    <form class="formulario marco" name="inscripcion" method="POST" action="{{ p.url }}pagar/" data-netlify="true" netlify-honeypot="empresa_web">
+      <input type="hidden" name="form-name" value="inscripcion">
+      <input type="hidden" name="producto" value="{{ p.titulo }}">
+      <input type="hidden" name="tipo" value="{{ p.tipo_etiqueta }}">
+      <input type="hidden" name="precio" value="{{ p.precio_texto }}">
+      <p hidden><label>No completar <input name="empresa_web" tabindex="-1" autocomplete="off"></label></p>
+
+      <div class="campo">
+        <label for="f-nombre">Nombre y apellido <span aria-hidden="true">*</span></label>
+        <input id="f-nombre" name="nombre" type="text" required autocomplete="name">
+      </div>
+      <div class="campo">
+        <label for="f-email">Email <span aria-hidden="true">*</span></label>
+        <input id="f-email" name="email" type="email" required autocomplete="email" aria-describedby="f-email-ayuda">
+        <small id="f-email-ayuda">A este email te enviamos {{ "el acceso" if esFormacion else "el material" }}. Revisalo bien.</small>
+      </div>
+      <div class="campo-doble">
+        <div class="campo">
+          <label for="f-profesion">Profesión <span aria-hidden="true">*</span></label>
+          <input id="f-profesion" name="profesion" type="text" required>
+        </div>
+        <div class="campo">
+          <label for="f-telefono">Teléfono / WhatsApp</label>
+          <input id="f-telefono" name="telefono" type="tel" autocomplete="tel">
+        </div>
+      </div>
+      <div class="campo-doble">
+        <div class="campo">
+          <label for="f-institucion">Institución o lugar de trabajo</label>
+          <input id="f-institucion" name="institucion" type="text" autocomplete="organization">
+        </div>
+        <div class="campo">
+          <label for="f-lugar">Ciudad y país</label>
+          <input id="f-lugar" name="ciudad_pais" type="text">
+        </div>
+      </div>
+      <div class="campo">
+        <label for="f-comentario">Comentario (opcional)</label>
+        <textarea id="f-comentario" name="comentario" rows="3"></textarea>
+      </div>
+      <div class="campo campo--check">
+        <input id="f-acepto" name="acepta_privacidad" type="checkbox" value="sí" required>
+        <label for="f-acepto">Acepto que mis datos se usen para gestionar esta inscripción, según la <a href="/privacidad/" target="_blank" rel="noopener">política de privacidad</a>. <span aria-hidden="true">*</span></label>
+      </div>
+      <button class="boton" type="submit">Continuar al pago</button>
+      <p class="detalle__nota">* Campos obligatorios.</p>
+    </form>
+  </div>
+</section>

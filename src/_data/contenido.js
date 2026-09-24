@@ -175,6 +175,7 @@ module.exports = function () {
     experiencias: deTipo("experiencia"),
     recursos: productos.filter((p) => p.tipo === "recurso" || (p.gratuito && p.tipo !== "recurso" && p.tambien_en_recursos)),
     destacados: productos.filter((p) => p.destacado),
+    conInscripcion: productos.filter((p) => p.accion && p.accion.tipo === "inscribirse"),
     publicaciones,
     publicacionesPorTipo: Object.fromEntries(Object.keys(TIPOS_PUBLICACION).map((t) => [t, publicaciones.filter((p) => p.tipo === t)])),
     equipo,

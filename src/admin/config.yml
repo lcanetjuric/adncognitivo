@@ -45,11 +45,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -133,11 +134,12 @@ collections:
     - ARS
     - EUR
     required: false
-  - label: URL de compra (Payhip u otra plataforma)
+  - label: URL de compra (link de pago de Mercado Pago u otra plataforma)
     name: url_compra
     widget: string
     required: false
-    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+    hint: Pegá el link de pago. Antes de pagar, la web le pide a la persona sus datos (nombre, email, profesión)
+      y te llegan a Netlify.
   - label: URL de acceso (gratuitos)
     name: url_acceso
     widget: string
@@ -213,11 +215,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -274,11 +277,12 @@ collections:
     widget: select
     options: *id006
     required: false
-  - label: URL de compra (Payhip u otra plataforma)
+  - label: URL de compra (link de pago de Mercado Pago u otra plataforma)
     name: url_compra
     widget: string
     required: false
-    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+    hint: Pegá el link de pago. Antes de pagar, la web le pide a la persona sus datos (nombre, email, profesión)
+      y te llegan a Netlify.
   - label: URL de acceso (gratuitos)
     name: url_acceso
     widget: string
@@ -348,11 +352,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -414,11 +419,12 @@ collections:
     widget: select
     options: *id006
     required: false
-  - label: URL de compra (Payhip u otra plataforma)
+  - label: URL de compra (link de pago de Mercado Pago u otra plataforma)
     name: url_compra
     widget: string
     required: false
-    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+    hint: Pegá el link de pago. Antes de pagar, la web le pide a la persona sus datos (nombre, email, profesión)
+      y te llegan a Netlify.
   - label: URL de acceso (gratuitos)
     name: url_acceso
     widget: string
@@ -488,11 +494,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -545,11 +552,12 @@ collections:
     widget: select
     options: *id006
     required: false
-  - label: URL de compra (Payhip u otra plataforma)
+  - label: URL de compra (link de pago de Mercado Pago u otra plataforma)
     name: url_compra
     widget: string
     required: false
-    hint: Pegá el enlace de checkout del producto. El botón COMPRAR lleva a esta dirección.
+    hint: Pegá el link de pago. Antes de pagar, la web le pide a la persona sus datos (nombre, email, profesión)
+      y te llegan a Netlify.
   - label: URL de la experiencia
     name: url_acceso
     widget: string
@@ -614,11 +622,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: 'Opcional. Final de la URL, sin espacios ni acentos (ej: cufe-2). Si queda vacío se genera desde el título.'
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -728,11 +737,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: Opcional. Si queda vacío se genera desde el título.
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -846,11 +856,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: Opcional. Si queda vacío se genera desde el título.
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -964,11 +975,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: Opcional. Si queda vacío se genera desde el título.
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -1085,11 +1097,12 @@ collections:
   - label: Título
     name: titulo
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
-    hint: Opcional. Si queda vacío se genera desde el título.
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Tipo
     name: tipo
     widget: hidden
@@ -1196,10 +1209,12 @@ collections:
   - label: Nombre
     name: nombre
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Foto
     name: foto
     widget: image
@@ -1263,10 +1278,12 @@ collections:
   - label: Nombre
     name: nombre
     widget: string
-  - label: Slug (dirección web)
+  - label: No completar · nombre interno de la página
     name: slug
     widget: string
     required: false
+    hint: 'Dejalo VACÍO: se genera solo desde el título. No es un enlace externo; los enlaces van en su propio campo
+      más abajo.'
   - label: Descripción breve
     name: descripcion
     widget: text
@@ -1697,6 +1714,12 @@ collections:
         name: abrir_en_nueva_pestana
         widget: boolean
         default: true
+      - label: Pedir datos antes de pagar (formulario de inscripción)
+        name: pedir_datos
+        widget: boolean
+        default: true
+        required: false
+        hint: 'Activado: el botón lleva a un formulario (nombre, email, profesión) y después al pago.'
     - label: Suscripción por email (futuro)
       name: suscripcion
       widget: object

@@ -546,3 +546,25 @@ hr { border: 0; height: 2px; background: var(--tinta); margin: 3rem 0; }
   .cabecera, .pie, .filtros, .hero__botones { display: none; }
   body { background: #fff; }
 }
+
+/* ---------------------------------------------------- inscripción / formularios */
+.pasos { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: .9rem; }
+.pasos li { display: flex; gap: .9rem; align-items: baseline; font-size: 1.1rem; }
+.pasos span { font-family: var(--mano); font-size: 1.5rem; line-height: 1; min-width: 1.2em; }
+.formulario { padding: clamp(1.25rem, 3vw, 2rem); background: var(--papel); display: grid; gap: 1.1rem; }
+.campo { display: grid; gap: .35rem; }
+.campo label { font-weight: 600; font-size: .95rem; }
+.campo small { color: var(--gris-texto); font-size: .85rem; }
+.campo input, .campo textarea {
+  font: inherit; color: var(--tinta); background: #fff; width: 100%;
+  padding: .75rem .85rem; min-height: 3rem; border: 2px solid var(--tinta); border-radius: 0;
+}
+.campo textarea { resize: vertical; }
+.campo input:focus-visible, .campo textarea:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; box-shadow: none; }
+.campo-doble { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+.campo--check { grid-template-columns: auto 1fr; align-items: start; gap: .7rem; }
+.campo--check input { width: 1.3rem; height: 1.3rem; min-height: 0; margin-top: .2rem; accent-color: var(--tinta); }
+.campo--check label { font-weight: 400; }
+@media (max-width: 560px) { .campo-doble { grid-template-columns: 1fr; } }
+
+[id] { scroll-margin-top: 6rem; }

@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ tituloPagina }}</title>
   <meta name="description" content="{{ descPagina }}">
+  {% if noindex %}<meta name="robots" content="noindex">{% endif %}
   {% if sitio.url %}<link rel="canonical" href="{{ canonica }}">{% endif %}
   <meta property="og:type" content="{{ ogTipo or 'website' }}">
   <meta property="og:site_name" content="{{ sitio.nombre }}">

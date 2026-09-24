@@ -1,0 +1,34 @@
+---
+layout: base.njk
+noindex: true
+pagination:
+  data: contenido.conInscripcion
+  size: 1
+  alias: p
+permalink: "{{ p.url }}pagar/"
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  titulo: "Pago · {{ p.titulo }}"
+---
+{#- Página a la que llega la persona después de enviar el formulario de inscripción. -#}
+{%- from "macros.njk" import dib -%}
+{%- set esFormacion = p.tipo == "curso" or p.tipo == "masterclass" -%}
+<section class="seccion">
+  <div class="contenedor dos-col" style="align-items:center">
+    <div>
+      <p class="mano gira-1" style="font-size:1.6rem">¡Gracias! Ya tenemos tus datos.</p>
+      <svg class="dib" style="width:7rem;height:4rem;margin-top:.5rem" aria-hidden="true"><use href="#d-flecha-curva"/></svg>
+    </div>
+    <div class="marco" style="padding:2rem">
+      <p class="rotulo" style="margin-bottom:1rem">Último paso</p>
+      <h1 class="encabezado__titulo" style="font-size:clamp(2rem,5vw,3.2rem)">Realizá el pago</h1>
+      <p class="encabezado__bajada">{{ p.titulo }}{% if p.precio_texto %} · <strong>{{ p.precio_texto }}</strong>{% endif %}</p>
+      <p style="margin-top:2rem"><a class="boton" href="{{ p.accion.pago }}" rel="noopener">Pagar{% if p.accion.plataforma %} con {{ p.accion.plataforma }}{% endif %}{{ dib("externo") }}</a></p>
+      <p class="detalle__nota" style="margin-top:1.5rem">
+        Cuando se acredite el pago te vamos a escribir al email que indicaste con {{ "el acceso" if esFormacion else "el material" }}.
+        {%- if sitio.email %} Si tenés dudas, escribinos a <a href="mailto:{{ sitio.email }}">{{ sitio.email }}</a>.{% endif %}
+      </p>
+      <p class="mt-2"><a class="enlace-flecha" href="{{ p.url }}"><span>Volver a la ficha</span>{{ dib("flecha") }}</a></p>
+    </div>
+  </div>
+</section>
