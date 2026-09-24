@@ -13,7 +13,7 @@
     "url_externa": ""
   },
   "venta": {
-    "plataforma": "Payhip",
+    "plataforma": "Mercado Pago",
     "texto_comprar": "Comprar",
     "url_cuenta": "",
     "abrir_en_nueva_pestana": true
