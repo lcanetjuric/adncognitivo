@@ -21,7 +21,7 @@ Código y decisiones, todavía sin commit ni publicación.
 
 - [x] **1. Confirmar la casilla de aviso.** En `inscripcion.php`, `$avisoPara` está en `germanesalinas@gmail.com` para el primer deploy, y así se puede ver si el mail sale. La casilla definitiva, para un deploy posterior, es `adncognitivo@gmail.com`.
   - Fecha: 2026-10-07
-  - Revertir: cambiar la constante. Todavía no está en ningún remoto.
+  - Revertir: cambiar la constante en la rama. Ya está en el PR, no en `master`.
 
 - [x] **2. Commit local en ConicetTAC.** Desde `origin/master`, rama `adncognitivo-api`, solo estos archivos: `check-adncognitivo-scope.yml`, `var/www/html/adncognitivo-api/inscripcion.php`, `modificaciones/2026-09-29/crear_adncognitivo_inscripciones.sql.txt`. Sin push. `2026-09-01-deploy.md` no entra.
   - Fecha: 2026-10-07
@@ -31,20 +31,20 @@ Código y decisiones, todavía sin commit ni publicación.
   - Fecha: 2026-10-07
   - Revertir: quitar el commit de la rama. Netlify no se entera.
 
-- [ ] **4. Pull request de la infraestructura, sin merge.** Push de `adncognitivo-api` y PR hacia `master` de `gercho25/ConicetTAC`.
-  - Fecha:
+- [x] **4. Pull request de la infraestructura, sin merge.** Push de `adncognitivo-api` y PR hacia `master` de `gercho25/ConicetTAC`: https://github.com/gercho25/ConicetTAC/pull/1
+  - Fecha: 2026-10-07
   - Revertir: cerrar el PR y borrar la rama remota. `master` sigue igual.
 
-- [ ] **5. Merge de esa infraestructura a `master`.** No apretar el pull de Ferozo.
-  - Fecha:
+- [x] **5. Merge de esa infraestructura a `master`.** Commit `68bfad1a`. No apretar el pull de Ferozo.
+  - Fecha: 2026-10-07
   - Revertir: revert del merge en GitHub. El sitio sigue sirviendo lo que Ferozo tiene hoy.
 
-- [ ] **6. Migración SQL en producción.** Correr `modificaciones/2026-09-29/crear_adncognitivo_inscripciones.sql.txt` en la base `sitioweb`.
-  - Fecha:
+- [x] **6. Migración SQL en producción.** Correr `modificaciones/2026-09-29/crear_adncognitivo_inscripciones.sql.txt` en la base `sitioweb`.
+  - Fecha: 2026-10-07
   - Revertir: `DROP TABLE adncognitivo_inscripciones;`
 
-- [ ] **7. Secreto `TAC_PUSH_TOKEN`.** En `lcanetjuric/adncognitivo` → Settings → Secrets and variables → Actions. Token de GitHub con escritura sobre `gercho25/ConicetTAC`.
-  - Fecha:
+- [x] **7. Secreto `TAC_PUSH_TOKEN`.** En `lcanetjuric/adncognitivo` → Settings → Secrets and variables → Actions, pestaña Secrets. Token de GitHub con escritura sobre `gercho25/ConicetTAC`.
+  - Fecha: 2026-10-07
   - Revertir: borrar el secreto. Sin él, el Action de sync no puede abrir el PR.
 
 - [ ] **8. Push a `main` de adncognitivo.** Dispara el build de Netlify y, si el secreto ya está, el Action que abre el PR `sync/adncognitivo`. En Netlify el prefijo no se aplica. El formulario de ese sitio pasa a postear a `/adncognitivo-api/inscripcion.php`, que en `adncognitivo.netlify.app` no existe: las inscripciones pasan a hacerse solo desde `tac.com.ar`.
