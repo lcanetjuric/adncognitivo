@@ -67,22 +67,22 @@ Código y decisiones, todavía sin commit ni publicación.
   - Fecha: 2026-10-07
   - Revertir: no hubo cambios en el servidor.
 
-- [ ] **13. Rama `deploy`.** El Action de `main` compila con `/adncognitivo/` y reemplaza la rama `deploy` de `lcanetjuric/adncognitivo`. La raíz de esa rama es el sitio. Todavía no está conectada a Ferozo.
-  - Fecha:
+- [x] **13. Rama `deploy`.** El Action de `main` compila con `/adncognitivo/` y reemplaza la rama `deploy` de `lcanetjuric/adncognitivo`. La raíz de esa rama es el sitio. Todavía no está conectada a Ferozo. Action [37671942939](https://github.com/lcanetjuric/adncognitivo/actions/runs/37671942939) en verde.
+  - Fecha: 2026-10-07
   - Revertir: borrar la rama `deploy`. `main` y `tac.com.ar` no cambian por eso.
 
-- [ ] **14. Git nuevo en Ferozo.** Directorio vacío `public_html/adncognitivo`, repo `lcanetjuric/adncognitivo`, rama `deploy`. Hay que agregar la clave SSH de Ferozo en ese repo. No tocar la entrada que apunta a `public_html`.
-  - Fecha:
+- [x] **14. Git nuevo en Ferozo.** `https://tac.com.ar/adncognitivo/` responde el sitio compilado (200, HTML estático, 2026-10-07 19:08 UTC). La clave SSH ya pudo leer el repo: no hizo falta cargarla desde `gercho25`.
+  - Fecha: 2026-10-07
   - Revertir: borrar esa entrada de Git. La carpeta del sitio se puede vaciar. El resto de `public_html` no entra.
 
-- [ ] **15. Webhook de Ferozo** para que cada actualización de `deploy` haga el pull sola.
+- [ ] **15. Webhook de Ferozo** para que cada actualización de `deploy` haga el pull sola. Lo tiene que cargar `lcanetjuric` (admin del repo). Hasta entonces, después de cada guardado en el CMS hay que apretar Desplegar a mano en la entrada de `public_html/adncognitivo`.
   - Fecha:
   - Revertir: borrar el webhook en GitHub.
 
-- [ ] **16. Subir `inscripcion.php` una vez** a `public_html/adncognitivo-api/`. No cambia con el CMS.
-  - Fecha:
+- [x] **16. Subir `inscripcion.php` una vez** a `public_html/adncognitivo-api/`. No cambia con el CMS. La tabla quedó en `c1402662_tac`, no en la base de WordPress.
+  - Fecha: 2026-10-07
   - Revertir: borrar esa carpeta.
 
-- [ ] **17. Prueba en `tac.com.ar/adncognitivo/`.** Navegación, una inscripción real (fila en `adncognitivo_inscripciones` y mail a la casilla del paso 1), y que la home de WordPress, `/v2/` y `/evaluacion/` siguen igual.
-  - Fecha:
+- [x] **17. Prueba en `tac.com.ar/adncognitivo/`.** El POST de prueba redirigió a `/adncognitivo/formacion/cursos/cufe-2/pagar/`. Home, `/v2/` y `/evaluacion/` siguen respondiendo. El mail de aviso llegó a `germanesalinas@gmail.com` (remitente `no-responder@tac.com.ar`, vía dattaweb.com).
+  - Fecha: 2026-10-07
   - Revertir: borrar `public_html/adncognitivo` y `public_html/adncognitivo-api`, más el `DROP TABLE` si se quiere sacar también la fila de prueba.
