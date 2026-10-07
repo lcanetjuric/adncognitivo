@@ -1,6 +1,6 @@
 # Publicar adncognitivo en tac.com.ar/adncognitivo
 
-> Estado: código listo (Camino B-mixta), sin publicar. El avance se marca en [CHECKLIST-DEPLOY.md](CHECKLIST-DEPLOY.md). Nada de esto está en producción todavía.
+> Estado: el pull de Git sobre `public_html` no sirve (no es un repo, y el layout no coincide con la web). El Action publica el sitio compilado en la rama `deploy` de este repo. Ferozo todavía no está conectado a esa rama. El avance se marca en [CHECKLIST-DEPLOY.md](CHECKLIST-DEPLOY.md). `tac.com.ar/adncognitivo/` sigue sin existir.
 
 ## Pedido original
 

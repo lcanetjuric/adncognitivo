@@ -47,26 +47,42 @@ Código y decisiones, todavía sin commit ni publicación.
   - Fecha: 2026-10-07
   - Revertir: borrar el secreto. Sin él, el Action de sync no puede abrir el PR.
 
-- [ ] **8. Push a `main` de adncognitivo.** Dispara el build de Netlify y, si el secreto ya está, el Action que abre el PR `sync/adncognitivo`. En Netlify el prefijo no se aplica. El formulario de ese sitio pasa a postear a `/adncognitivo-api/inscripcion.php`, que en `adncognitivo.netlify.app` no existe: las inscripciones pasan a hacerse solo desde `tac.com.ar`.
-  - Fecha:
+- [x] **8. Push a `main` de adncognitivo.** Dispara el build de Netlify y, si el secreto ya está, el Action que abre el PR `sync/adncognitivo`. En Netlify el prefijo no se aplica. El formulario de ese sitio pasa a postear a `/adncognitivo-api/inscripcion.php`, que en `adncognitivo.netlify.app` no existe: las inscripciones pasan a hacerse solo desde `tac.com.ar`.
+  - Fecha: 2026-10-07. `main` quedó en `052995e`. Action [37663845110](https://github.com/lcanetjuric/adncognitivo/actions/runs/37663845110) en verde.
   - Revertir: revert del commit en `main`. Netlify vuelve a publicar la versión anterior.
 
-- [ ] **9. Revisar el PR `sync/adncognitivo`.** Tiene que tocar solo `var/www/html/adncognitivo/` y el chequeo de alcance tiene que pasar. No mergear si el chequeo falla.
-  - Fecha:
+- [x] **9. Revisar el PR `sync/adncognitivo`.** Tiene que tocar solo `var/www/html/adncognitivo/` y el chequeo de alcance tiene que pasar. No mergear si el chequeo falla. https://github.com/gercho25/ConicetTAC/pull/2 — el chequeo `check-scope` pasó y el diff solo agrega archivos bajo `var/www/html/adncognitivo/`.
+  - Fecha: 2026-10-07
   - Revertir: cerrar el PR.
 
-- [ ] **10. Marcar el chequeo como obligatorio.** En `gercho25/ConicetTAC` → Settings → Branches → protección de `master` → exigir el check de `check-adncognitivo-scope.yml`. GitHub recién lo ofrece en la lista después de que el workflow corrió al menos una vez (paso 9).
-  - Fecha:
-  - Revertir: sacar ese check de la regla de protección.
+- [x] **10. Marcar el chequeo como obligatorio.** No se puede: `gercho25/ConicetTAC` es privado y el plan gratuito no incluye protección de ramas (GitHub pide Pro, o hacer el repo público). El workflow igual corre en cada PR. El freno queda en mirar que `check-scope` esté en verde antes de mergear, como en el paso 9.
+  - Fecha: 2026-10-07
+  - Revertir: no queda una regla activa que sacar.
 
-- [ ] **11. Merge del PR de sync a `master`.** Sigue sin deploy de Ferozo.
-  - Fecha:
+- [x] **11. Merge del PR de sync a `master`.** Commit `9c70e1db`. Sigue sin deploy de Ferozo. https://github.com/gercho25/ConicetTAC/pull/2
+  - Fecha: 2026-10-07
   - Revertir: revert del merge en GitHub.
 
-- [ ] **12. Pull en Ferozo.** Panel → Mi sitio web → Git → acción de pull sobre ConicetTAC. Recién ahí `tac.com.ar` recibe la API y la copia estática.
-  - Fecha:
-  - Revertir: revert de los merges en `master` y otro pull en Ferozo. La tabla del paso 6 sigue existiendo hasta el `DROP TABLE`.
+- [x] **12. Pull de Git sobre `public_html`.** No se reintenta. Desplegar respondió `fatal: not a git repository`. Esa entrada de Ferozo no se vuelve a usar: un clone del repo entero no coincide con la web. Backup de `public_html` hecho el 2026-10-07.
+  - Fecha: 2026-10-07
+  - Revertir: no hubo cambios en el servidor.
 
-- [ ] **13. Prueba en `tac.com.ar/adncognitivo/`.** Navegación, una inscripción real (fila en `adncognitivo_inscripciones` y mail a la casilla del paso 1), y que la home de WordPress, `/v2/` y `/evaluacion/` siguen igual.
+- [ ] **13. Rama `deploy`.** El Action de `main` compila con `/adncognitivo/` y reemplaza la rama `deploy` de `lcanetjuric/adncognitivo`. La raíz de esa rama es el sitio. Todavía no está conectada a Ferozo.
   - Fecha:
-  - Revertir: el del paso 12, más el `DROP TABLE` si se quiere sacar también la fila de prueba.
+  - Revertir: borrar la rama `deploy`. `main` y `tac.com.ar` no cambian por eso.
+
+- [ ] **14. Git nuevo en Ferozo.** Directorio vacío `public_html/adncognitivo`, repo `lcanetjuric/adncognitivo`, rama `deploy`. Hay que agregar la clave SSH de Ferozo en ese repo. No tocar la entrada que apunta a `public_html`.
+  - Fecha:
+  - Revertir: borrar esa entrada de Git. La carpeta del sitio se puede vaciar. El resto de `public_html` no entra.
+
+- [ ] **15. Webhook de Ferozo** para que cada actualización de `deploy` haga el pull sola.
+  - Fecha:
+  - Revertir: borrar el webhook en GitHub.
+
+- [ ] **16. Subir `inscripcion.php` una vez** a `public_html/adncognitivo-api/`. No cambia con el CMS.
+  - Fecha:
+  - Revertir: borrar esa carpeta.
+
+- [ ] **17. Prueba en `tac.com.ar/adncognitivo/`.** Navegación, una inscripción real (fila en `adncognitivo_inscripciones` y mail a la casilla del paso 1), y que la home de WordPress, `/v2/` y `/evaluacion/` siguen igual.
+  - Fecha:
+  - Revertir: borrar `public_html/adncognitivo` y `public_html/adncognitivo-api`, más el `DROP TABLE` si se quiere sacar también la fila de prueba.

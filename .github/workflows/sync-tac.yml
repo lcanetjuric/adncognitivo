@@ -1,19 +1,19 @@
 name: Publicar copia en la TAC
 
-# Sincroniza una copia estática de este sitio (con pathPrefix /adncognitivo/)
-# dentro de var/www/html/adncognitivo/ en gercho25/ConicetTAC — pero nunca
-# directo a master (esa rama gobierna el deploy real de TODA la TAC, no solo
-# de esto). En vez de eso, abre/actualiza un PR desde la rama sync/adncognitivo,
-# para que alguien lo revise y mergee a mano. Ese PR además pasa por el chequeo
-# de check-adncognitivo-scope.yml (repo ConicetTAC), que bloquea el merge si el
-# diff toca algo fuera de las carpetas de adncognitivo.
+# Compila el sitio con /adncognitivo/ y publica el resultado en la rama deploy
+# de este mismo repo. La raíz de esa rama es el sitio (index.html), sin
+# var/www/html. Ferozo tiene que clonar esa rama en una carpeta vacía
+# public_html/adncognitivo, no en public_html entero.
 #
-# Netlify sigue siendo el único lugar donde se edita (CMS, login con GitHub);
-# este workflow no lo toca. Ver DEPLOY-TAC.md para el contexto completo.
+# Cada push reemplaza la rama deploy. No toca main ni master de ConicetTAC.
+# Netlify sigue siendo donde se edita. Ver DEPLOY-TAC.md.
 
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   sync:
@@ -36,37 +36,12 @@ jobs:
       - name: Excluir el panel del CMS de la copia pública
         run: rm -rf _site/admin
 
-      - name: Checkout ConicetTAC
-        uses: actions/checkout@v4
-        with:
-          repository: gercho25/ConicetTAC
-          ref: master
-          token: ${{ secrets.TAC_PUSH_TOKEN }}
-          path: ConicetTAC
-
-      - name: Reemplazar la copia sincronizada
+      - name: Publicar la rama deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          rm -rf ConicetTAC/var/www/html/adncognitivo
-          mkdir -p ConicetTAC/var/www/html/adncognitivo
-          cp -r _site/. ConicetTAC/var/www/html/adncognitivo/
-
-      - name: Abrir o actualizar el PR hacia master
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.TAC_PUSH_TOKEN }}
-          path: ConicetTAC
-          branch: sync/adncognitivo
-          base: master
-          commit-message: "Sincroniza copia de adncognitivo (${{ github.sha }})"
-          title: "Sincroniza adncognitivo"
-          body: |
-            PR automático del sync de contenido de adncognitivo.
-            Origen: adncognitivo@${{ github.sha }}
-
-            Solo debería tocar `var/www/html/adncognitivo/`. El chequeo de
-            check-adncognitivo-scope.yml lo valida antes de poder mergear.
-          committer: "adncognitivo-sync-bot <adncognitivo-sync-bot@users.noreply.github.com>"
-          author: "adncognitivo-sync-bot <adncognitivo-sync-bot@users.noreply.github.com>"
-          delete-branch: true
-          add-paths: |
-            var/www/html/adncognitivo/**
+          cd _site
+          git init -b deploy
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Sitio compilado para tac.com.ar/adncognitivo (${{ github.sha }})"
+          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" HEAD:deploy
