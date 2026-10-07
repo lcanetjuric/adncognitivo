@@ -1,6 +1,18 @@
 # Publicar adncognitivo en tac.com.ar/adncognitivo
 
-> Estado: el pull de Git sobre `public_html` no sirve (no es un repo, y el layout no coincide con la web). El Action publica el sitio compilado en la rama `deploy` de este repo. Ferozo todavía no está conectado a esa rama. El avance se marca en [CHECKLIST-DEPLOY.md](CHECKLIST-DEPLOY.md). `tac.com.ar/adncognitivo/` sigue sin existir.
+> Estado: publicado en `https://tac.com.ar/adncognitivo/`. El detalle de la puesta en marcha está en [CHECKLIST-DEPLOY.md](CHECKLIST-DEPLOY.md). Cómo se edita y cómo llega al sitio, acá abajo.
+
+## Cómo se edita y cómo se publica
+
+Quien administra el contenido entra a `https://adncognitivo.netlify.app/admin/` con el mismo login de GitHub de siempre. El CMS guarda en la rama `main`. Netlify compila con `eleventy`, sin `--pathprefix`, así que el sitio de Netlify se ve igual que antes.
+
+Ese push a `main` también dispara el Action, que compila de nuevo con `--pathprefix=/adncognitivo/` y reemplaza la rama `deploy`. Ferozo no se entera solo: hay que entrar al panel, Git, y apretar Desplegar en la entrada que apunta a la carpeta `public_html/adncognitivo` y a la rama `deploy`. Hasta que `lcanetjuric` cargue el webhook, ese clic es obligatorio. Si no se aprieta, `tac.com.ar/adncognitivo/` queda en la versión anterior.
+
+El formulario de inscripción ya no usa Netlify Forms. Envía a `/adncognitivo-api/inscripcion.php`, que solo existe en `tac.com.ar`. Probar una inscripción en `adncognitivo.netlify.app` no funciona. Editar cursos, textos e imágenes no pasa por ese formulario.
+
+La tabla `adncognitivo_inscripciones` está en la base `c1402662_tac`. El aviso de prueba llegó a `germanesalinas@gmail.com` desde `no-responder@tac.com.ar`. La casilla definitiva, para más adelante, es `adncognitivo@gmail.com`.
+
+No apretar Desplegar en la entrada de Git que instala el repo entero en `public_html`. Esa carpeta no es un repositorio git y el layout del repo no coincide con la web.
 
 ## Pedido original
 
