@@ -19,8 +19,8 @@ Código y decisiones, todavía sin commit ni publicación.
 
 ## Puesta en marcha
 
-- [ ] **1. Confirmar la casilla de aviso.** En `inscripcion.php`, `$avisoPara` está en `adncognitivo@gmail.com`. Anotar acá si esa casilla queda o cuál la reemplaza.
-  - Fecha:
+- [x] **1. Confirmar la casilla de aviso.** En `inscripcion.php`, `$avisoPara` está en `germanesalinas@gmail.com` para el primer deploy, y así se puede ver si el mail sale. La casilla definitiva, para un deploy posterior, es `adncognitivo@gmail.com`.
+  - Fecha: 2026-10-07
   - Revertir: cambiar la constante. Todavía no está en ningún remoto.
 
 - [x] **2. Commit local en ConicetTAC.** Desde `origin/master`, rama `adncognitivo-api`, solo estos archivos: `check-adncognitivo-scope.yml`, `var/www/html/adncognitivo-api/inscripcion.php`, `modificaciones/2026-09-29/crear_adncognitivo_inscripciones.sql.txt`. Sin push. `2026-09-01-deploy.md` no entra.
