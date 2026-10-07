@@ -18,7 +18,7 @@ eleventyComputed:
   <div class="contenedor dos-col">
     <div>
       <div class="persona__foto marco marco--fino" style="max-width:340px">
-        {% if m.foto %}<img src="{{ m.foto }}" alt="{{ m.foto_alt or ('Foto de ' + m.nombre) }}">{% else %}<span class="persona__iniciales" aria-hidden="true">{{ m.nombre[0] }}</span>{% endif %}
+        {% if m.foto %}<img src="{{ m.foto | url }}" alt="{{ m.foto_alt or ('Foto de ' + m.nombre) }}">{% else %}<span class="persona__iniciales" aria-hidden="true">{{ m.nombre[0] }}</span>{% endif %}
       </div>
       {%- if m.enlaces.length %}
       <ul class="pie__lista" style="margin-top:1.5rem">
@@ -36,7 +36,7 @@ eleventyComputed:
       {%- endif %}
       {%- if m.proyectos.length %}
       <h2 class="rotulo mt-3" style="margin-bottom:1rem">Proyectos</h2>
-      <ul class="pie__lista">{% for pr in m.proyectos %}<li><a href="{{ pr.url }}">{{ pr.nombre }}</a>{% if pr.anio %} · {{ pr.anio }}{% endif %}</li>{% endfor %}</ul>
+      <ul class="pie__lista">{% for pr in m.proyectos %}<li><a href="{{ pr.url | url }}">{{ pr.nombre }}</a>{% if pr.anio %} · {{ pr.anio }}{% endif %}</li>{% endfor %}</ul>
       {%- endif %}
     </div>
   </div>

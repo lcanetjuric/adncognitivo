@@ -23,12 +23,12 @@ eleventyComputed:
       <p class="rotulo" style="margin-bottom:1rem">Último paso</p>
       <h1 class="encabezado__titulo" style="font-size:clamp(2rem,5vw,3.2rem)">Realizá el pago</h1>
       <p class="encabezado__bajada">{{ p.titulo }}{% if p.precio_texto %} · <strong>{{ p.precio_texto }}</strong>{% endif %}</p>
-      <p style="margin-top:2rem"><a class="boton" href="{{ p.accion.pago }}" rel="noopener">Pagar{% if p.accion.plataforma %} con {{ p.accion.plataforma }}{% endif %}{{ dib("externo") }}</a></p>
+      <p style="margin-top:2rem"><a class="boton" href="{{ p.accion.pago | url }}" rel="noopener">Pagar{% if p.accion.plataforma %} con {{ p.accion.plataforma }}{% endif %}{{ dib("externo") }}</a></p>
       <p class="detalle__nota" style="margin-top:1.5rem">
         Cuando se acredite el pago te vamos a escribir al email que indicaste con {{ "el acceso" if esFormacion else "el material" }}.
         {%- if sitio.email %} Si tenés dudas, escribinos a <a href="mailto:{{ sitio.email }}">{{ sitio.email }}</a>.{% endif %}
       </p>
-      <p class="mt-2"><a class="enlace-flecha" href="{{ p.url }}"><span>Volver a la ficha</span>{{ dib("flecha") }}</a></p>
+      <p class="mt-2"><a class="enlace-flecha" href="{{ p.url | url }}"><span>Volver a la ficha</span>{{ dib("flecha") }}</a></p>
     </div>
   </div>
 </section>

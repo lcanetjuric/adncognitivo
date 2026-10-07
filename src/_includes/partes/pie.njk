@@ -3,19 +3,19 @@
   <div class="contenedor">
     <div class="pie__grilla">
       <div class="pie__marca">
-        <img class="pie__logo" src="{{ sitio.logo_oscuro }}" alt="{{ sitio.nombre }}" width="380" height="80">
+        <img class="pie__logo" src="{{ sitio.logo_oscuro | url }}" alt="{{ sitio.nombre }}" width="380" height="80">
         <p class="pie__frase">{{ sitio.footer_texto }}</p>
         {% if sitio.footer_nota %}<p class="pie__nota">{{ sitio.footer_nota }}</p>{% endif %}
       </div>
       <div>
         <h2 class="pie__titulo">Explorar</h2>
         <ul class="pie__lista">
-          <li><a href="/formacion/">Formación</a></li>
-          <li><a href="/materiales/">Materiales</a></li>
-          <li><a href="/experiencias/">Experiencias</a></li>
-          <li><a href="/publicaciones/">Publicaciones</a></li>
-          <li><a href="/quienes-somos/">Quiénes somos</a></li>
-          <li><a href="/recursos-gratuitos/">Recursos gratuitos</a></li>
+          <li><a href="{{ '/formacion/' | url }}">Formación</a></li>
+          <li><a href="{{ '/materiales/' | url }}">Materiales</a></li>
+          <li><a href="{{ '/experiencias/' | url }}">Experiencias</a></li>
+          <li><a href="{{ '/publicaciones/' | url }}">Publicaciones</a></li>
+          <li><a href="{{ '/quienes-somos/' | url }}">Quiénes somos</a></li>
+          <li><a href="{{ '/recursos-gratuitos/' | url }}">Recursos gratuitos</a></li>
         </ul>
       </div>
       <div>
@@ -28,13 +28,13 @@
           {% if not sitio.email and not sitio.instagram and not sitio.linkedin and not sitio.otras_redes.length %}
           <li class="pendiente">Datos de contacto: completar en Configuración del sitio.</li>
           {% endif %}
-          <li><a href="/buscar/">Buscar en el sitio</a></li>
+          <li><a href="{{ '/buscar/' | url }}">Buscar en el sitio</a></li>
         </ul>
       </div>
     </div>
     <div class="pie__base">
       <p>© {{ sitio.anio }} {{ sitio.nombre }}</p>
-      <p><a href="/aviso-legal/">Aviso legal</a> · <a href="/privacidad/">Privacidad</a></p>
+      <p><a href="{{ '/aviso-legal/' | url }}">Aviso legal</a> · <a href="{{ '/privacidad/' | url }}">Privacidad</a></p>
     </div>
   </div>
 </footer>

@@ -8,7 +8,7 @@
   {%- if s.modo == "externo" and s.url_externa %}
   <p><a class="boton" href="{{ s.url_externa }}" target="_blank" rel="noopener">Suscribirme</a></p>
   {%- else %}
-  <form name="suscripcion" method="POST" data-netlify="true" netlify-honeypot="empresa" action="/gracias/">
+  <form name="suscripcion" method="POST" data-netlify="true" netlify-honeypot="empresa" action="{{ '/gracias/' | url }}">
     <input type="hidden" name="form-name" value="suscripcion">
     <p hidden><label>No completar: <input name="empresa"></label></p>
     <label class="visualmente-oculto" for="email-suscripcion">Email</label>

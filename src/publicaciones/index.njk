@@ -18,7 +18,7 @@ descripcion: Libros, capítulos, artículos científicos y otras publicaciones d
     {%- if lista.length %}
     <h2 class="rotulo" style="margin:3rem 0 1rem" id="{{ clave }}">{{ def.plural }} · {{ lista.length }}</h2>
     <ul class="pub-lista">{% for p in lista %}{{ pub(p) }}{% endfor %}</ul>
-    <p class="mt-1"><a class="enlace-flecha" href="{{ def.ruta }}"><span>Ver {{ def.plural | lower }}</span>{{ dib("flecha") }}</a></p>
+    <p class="mt-1"><a class="enlace-flecha" href="{{ def.ruta | url }}"><span>Ver {{ def.plural | lower }}</span>{{ dib("flecha") }}</a></p>
     {%- endif %}
     {%- endfor %}
     {%- else %}

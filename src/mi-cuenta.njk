@@ -16,7 +16,7 @@ descripcion: Acceso a compras y materiales de ADNCognitivo.
       <div class="fila-acciones">
         {% if sitio.venta.url_cuenta %}<a class="boton" href="{{ sitio.venta.url_cuenta }}" target="_blank" rel="noopener">Ir a mis compras{{ dib("externo") }}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>{% endif %}
         {% if sitio.email %}<a class="boton boton--contorno" href="mailto:{{ sitio.email }}">Escribirnos</a>{% endif %}
-        <a class="enlace-flecha" href="/catalogo/"><span>Ver catálogo</span>{{ dib("flecha") }}</a>
+        <a class="enlace-flecha" href="{{ '/catalogo/' | url }}"><span>Ver catálogo</span>{{ dib("flecha") }}</a>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
-{#- Formulario de inscripción previo al pago (Netlify Forms, gratuito).
-    Los datos quedan en Netlify → Forms → "inscripcion" y llegan por email si se activa la notificación. -#}
+{#- Formulario de inscripción previo al pago.
+    Envía a /adncognitivo-api/inscripcion.php (fuera de la copia sincronizada por CI, ver DEPLOY-TAC.md). -#}
 {%- set esFormacion = p.tipo == "curso" or p.tipo == "masterclass" -%}
 <section class="seccion seccion--gris" id="inscripcion" aria-labelledby="inscripcion-titulo">
   <div class="contenedor dos-col">
@@ -13,9 +13,9 @@
         <li><span>3</span> Te escribimos al email que indiques con {{ "el acceso" if esFormacion else "el material" }}.</li>
       </ol>
     </div>
-    <form class="formulario marco" name="inscripcion" method="POST" action="{{ p.url }}pagar/" data-netlify="true" netlify-honeypot="empresa_web">
-      <input type="hidden" name="form-name" value="inscripcion">
+    <form class="formulario marco" name="inscripcion" method="POST" action="/adncognitivo-api/inscripcion.php">
       <input type="hidden" name="producto" value="{{ p.titulo }}">
+      <input type="hidden" name="producto_url" value="{{ p.url }}">
       <input type="hidden" name="tipo" value="{{ p.tipo_etiqueta }}">
       <input type="hidden" name="precio" value="{{ p.precio_texto }}">
       <p hidden><label>No completar <input name="empresa_web" tabindex="-1" autocomplete="off"></label></p>
@@ -55,7 +55,7 @@
       </div>
       <div class="campo campo--check">
         <input id="f-acepto" name="acepta_privacidad" type="checkbox" value="sí" required>
-        <label for="f-acepto">Acepto que mis datos se usen para gestionar esta inscripción, según la <a href="/privacidad/" target="_blank" rel="noopener">política de privacidad</a>. <span aria-hidden="true">*</span></label>
+        <label for="f-acepto">Acepto que mis datos se usen para gestionar esta inscripción, según la <a href="{{ '/privacidad/' | url }}" target="_blank" rel="noopener">política de privacidad</a>. <span aria-hidden="true">*</span></label>
       </div>
       <button class="boton" type="submit">Continuar al pago</button>
       <p class="detalle__nota">* Campos obligatorios.</p>

@@ -13,7 +13,7 @@
         {%- for pr in contenido.proyectos.slice(0, 4) %}
         <li class="renglon" style="grid-template-columns:minmax(0,1fr) auto">
           <div>
-            <h3 class="renglon__titulo"><a href="{{ pr.url }}">{{ pr.nombre }}</a></h3>
+            <h3 class="renglon__titulo"><a href="{{ pr.url | url }}">{{ pr.nombre }}</a></h3>
             {% if pr.descripcion %}<p class="renglon__desc">{{ pr.descripcion }}</p>{% endif %}
             <div class="renglon__meta">
               {% if pr.anio %}<span class="sticker sticker--recto">{{ pr.anio }}</span>{% endif %}
@@ -24,7 +24,7 @@
         </li>
         {%- endfor %}
       </ul>
-      <p class="mt-2"><a class="enlace-flecha" href="/quienes-somos/proyectos/"><span>Ver todos los proyectos</span>{{ dib("flecha") }}</a></p>
+      <p class="mt-2"><a class="enlace-flecha" href="{{ '/quienes-somos/proyectos/' | url }}"><span>Ver todos los proyectos</span>{{ dib("flecha") }}</a></p>
       {%- else %}
       <p class="pendiente" style="font-size:1.3rem">Los proyectos se van a presentar en esta sección.</p>
       {%- endif %}

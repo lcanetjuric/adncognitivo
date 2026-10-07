@@ -19,13 +19,13 @@ eleventyComputed:
 <section class="seccion">
   <div class="contenedor detalle">
     <div>
-      {% if p.imagen %}<div class="detalle__visual" style="aspect-ratio:auto;max-width:360px"><img src="{{ p.imagen }}" alt="{{ p.imagen_alt or '' }}"></div>{% endif %}
+      {% if p.imagen %}<div class="detalle__visual" style="aspect-ratio:auto;max-width:360px"><img src="{{ p.imagen | url }}" alt="{{ p.imagen_alt or '' }}"></div>{% endif %}
       {% if p.autores_texto %}<p class="lead">{{ p.autores_texto }}</p>{% endif %}
       {% if p.descripcion %}<div class="prosa"><p>{{ p.descripcion }}</p></div>{% endif %}
       {% if p.cuerpo_html %}<div class="prosa">{{ p.cuerpo_html | safe }}</div>{% endif %}
       {%- if p.integrantes_equipo.length %}
       <p class="rotulo mt-3">Del equipo</p>
-      <p>{% for m in p.integrantes_equipo %}<a href="{{ m.url }}">{{ m.nombre }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+      <p>{% for m in p.integrantes_equipo %}<a href="{{ m.url | url }}">{{ m.nombre }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
       {%- endif %}
     </div>
     <aside class="detalle__ficha marco" aria-label="Referencia">
@@ -42,8 +42,8 @@ eleventyComputed:
         {% if p.doi %}<dt>DOI</dt><dd style="word-break:break-all"><a href="{{ p.doi_url }}" target="_blank" rel="noopener">{{ p.doi }}</a></dd>{% endif %}
       </dl>
       <div class="fila-acciones">
-        {% if p.enlace %}<a class="boton" href="{{ p.enlace }}" target="_blank" rel="noopener">Ver publicación{{ dib("externo") }}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>{% endif %}
-        {% if p.pdf %}<a class="boton boton--contorno" href="{{ p.pdf }}" download>Descargar PDF{{ dib("descarga") }}</a>{% endif %}
+        {% if p.enlace %}<a class="boton" href="{{ p.enlace | url }}" target="_blank" rel="noopener">Ver publicación{{ dib("externo") }}<span class="visualmente-oculto"> (se abre en una pestaña nueva)</span></a>{% endif %}
+        {% if p.pdf %}<a class="boton boton--contorno" href="{{ p.pdf | url }}" download>Descargar PDF{{ dib("descarga") }}</a>{% endif %}
       </div>
     </aside>
   </div>

@@ -4,15 +4,15 @@
    La web funciona solo con negro + marfil; teal y coral son acentos mínimos.
    ========================================================================== */
 
-@font-face { font-family: "Outfit"; src: url("/assets/fonts/outfit-latin-300-normal.woff2") format("woff2"); font-weight: 300; font-display: swap; }
-@font-face { font-family: "Outfit"; src: url("/assets/fonts/outfit-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Outfit"; src: url("/assets/fonts/outfit-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Outfit"; src: url("/assets/fonts/outfit-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "Outfit"; src: url("/assets/fonts/outfit-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Outfit"; src: url("/assets/fonts/outfit-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: swap; }
-@font-face { font-family: "Kalam"; src: url("/assets/fonts/kalam-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Kalam"; src: url("/assets/fonts/kalam-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Newsreader"; src: url("/assets/fonts/newsreader-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Outfit"; src: url("../fonts/outfit-latin-300-normal.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Outfit"; src: url("../fonts/outfit-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Outfit"; src: url("../fonts/outfit-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Outfit"; src: url("../fonts/outfit-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Outfit"; src: url("../fonts/outfit-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Outfit"; src: url("../fonts/outfit-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+@font-face { font-family: "Kalam"; src: url("../fonts/kalam-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Kalam"; src: url("../fonts/kalam-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 
 :root {
   --tinta: #1F1F1F;
@@ -30,10 +30,10 @@
   --lateral: clamp(1.25rem, 4vw, 3rem);
   --aire: clamp(5rem, 11vw, 9.5rem);
 
-  --marco: url("/assets/img/dibujos/marco-1.svg");
-  --marco-2: url("/assets/img/dibujos/marco-2.svg");
-  --marco-fino: url("/assets/img/dibujos/marco-fino.svg");
-  --marco-claro: url("/assets/img/dibujos/marco-claro.svg");
+  --marco: url("../img/dibujos/marco-1.svg");
+  --marco-2: url("../img/dibujos/marco-2.svg");
+  --marco-fino: url("../img/dibujos/marco-fino.svg");
+  --marco-claro: url("../img/dibujos/marco-claro.svg");
 }
 
 /* ---------------------------------------------------------------- base */
@@ -96,9 +96,9 @@ hr { border: 0; height: 2px; background: var(--tinta); margin: 3rem 0; }
 }
 .subrayar::after {
   content: ""; position: absolute; left: -2%; right: -4%; bottom: -.18em; height: .22em;
-  background: url("/assets/img/dibujos/subrayado.svg") center / 100% 100% no-repeat;
+  background: url("../img/dibujos/subrayado.svg") center / 100% 100% no-repeat;
 }
-.subrayar--coral::after { background-image: url("/assets/img/dibujos/subrayado-coral.svg"); }
+.subrayar--coral::after { background-image: url("../img/dibujos/subrayado-coral.svg"); }
 
 /* ---------------------------------------------------------- marcos a mano */
 .marco {
@@ -180,9 +180,9 @@ hr { border: 0; height: 2px; background: var(--tinta); margin: 3rem 0; }
   text-decoration: none; background: none; border: 0; color: inherit; font-family: inherit; cursor: pointer;
 }
 .nav__enlace[aria-current="page"], .nav__enlace.es-actual {
-  background: url("/assets/img/dibujos/subrayado.svg") center bottom .15rem / calc(100% - 1rem) 5px no-repeat;
+  background: url("../img/dibujos/subrayado.svg") center bottom .15rem / calc(100% - 1rem) 5px no-repeat;
 }
-.nav__enlace:hover { background: url("/assets/img/dibujos/subrayado.svg") center bottom .15rem / calc(100% - 1rem) 5px no-repeat; }
+.nav__enlace:hover { background: url("../img/dibujos/subrayado.svg") center bottom .15rem / calc(100% - 1rem) 5px no-repeat; }
 .nav__sub {
   position: absolute; top: 100%; left: -.4rem; min-width: 14rem; z-index: 5;
   list-style: none; margin: 0; padding: .6rem;
@@ -356,7 +356,7 @@ hr { border: 0; height: 2px; background: var(--tinta); margin: 3rem 0; }
 .portada {
   position: absolute; inset: 0; padding: 1.4rem 1.4rem 1.2rem;
   display: flex; flex-direction: column; justify-content: flex-end;
-  background: var(--papel) url("/assets/img/dibujos/cuadricula.svg") repeat;
+  background: var(--papel) url("../img/dibujos/cuadricula.svg") repeat;
 }
 .portada__tipo { position: absolute; top: 1.2rem; right: 1.3rem; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; }
 .portada__titulo { font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-weight: 800; line-height: .98; letter-spacing: -0.03em; max-width: 12ch; }
@@ -417,7 +417,7 @@ hr { border: 0; height: 2px; background: var(--tinta); margin: 3rem 0; }
 .subcat + .subcat { border-left: 1px solid var(--tinta); }
 .subcat__nombre { font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .85rem; }
 .subcat__num { font-family: var(--mano); font-size: 1.4rem; }
-.subcat:hover .subcat__nombre, .subcat[aria-current="page"] .subcat__nombre { background: url("/assets/img/dibujos/subrayado.svg") left bottom / 100% 5px no-repeat; padding-bottom: 4px; }
+.subcat:hover .subcat__nombre, .subcat[aria-current="page"] .subcat__nombre { background: url("../img/dibujos/subrayado.svg") left bottom / 100% 5px no-repeat; padding-bottom: 4px; }
 @media (max-width: 760px) {
   .subcats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .subcat { flex-wrap: wrap; }
@@ -479,7 +479,7 @@ hr { border: 0; height: 2px; background: var(--tinta); margin: 3rem 0; }
 /* ----------------------------------------------------------------- equipo */
 .equipo { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 3rem 2.5rem; }
 .persona { position: relative; }
-.persona__foto { aspect-ratio: 4 / 5; overflow: hidden; margin-bottom: 1.25rem; background: #EFEBE1 url("/assets/img/dibujos/cuadricula.svg"); display: grid; place-items: center; }
+.persona__foto { aspect-ratio: 4 / 5; overflow: hidden; margin-bottom: 1.25rem; background: #EFEBE1 url("../img/dibujos/cuadricula.svg"); display: grid; place-items: center; }
 .persona__foto img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
 .persona__iniciales { font-size: 4rem; font-weight: 800; letter-spacing: -0.04em; }
 .persona__nombre { font-size: 1.4rem; }

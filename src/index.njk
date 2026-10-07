@@ -11,14 +11,14 @@ esInicio: true
   <div class="contenedor hero__grilla">
     <div>
       <h1 id="hero-titulo" class="hero__logo">
-        <img src="/assets/img/marca/logo-horizontal.svg" alt="ADNCognitivo" width="860" height="200">
+        <img src="{{ '/assets/img/marca/logo-horizontal.svg' | url }}" alt="ADNCognitivo" width="860" height="200">
       </h1>
       <p class="hero__tagline rotulo">{{ h.hero_etiqueta }}</p>
       <p class="hero__texto">{{ h.hero_texto }}</p>
       <svg class="hero__barra" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true" fill="currentColor"><use href="#d-subrayado"/></svg>
       <div class="hero__botones">
-        <a class="boton" href="{{ h.boton_1_url }}">{{ h.boton_1_texto }}</a>
-        <a class="boton boton--contorno" href="{{ h.boton_2_url }}">{{ h.boton_2_texto }}</a>
+        <a class="boton" href="{{ h.boton_1_url | url }}">{{ h.boton_1_texto }}</a>
+        <a class="boton boton--contorno" href="{{ h.boton_2_url | url }}">{{ h.boton_2_texto }}</a>
       </div>
     </div>
     <div class="hero__lateral">
@@ -55,7 +55,7 @@ esInicio: true
 
     <nav class="areas" aria-label="Grandes áreas">
       {%- for a in h.areas %}
-      <a class="area" href="{{ a.url }}">
+      <a class="area" href="{{ a.url | url }}">
         {{ dib("area-" + a.icono, "area__dib") }}
         <span class="area__cuerpo">
           <span class="area__titulo">{{ a.titulo }}</span>
@@ -77,7 +77,7 @@ esInicio: true
         <h2 class="encabezado__titulo" id="formacion-titulo">{{ sec.formacion.titulo }}</h2>
         <p class="encabezado__bajada">{{ sec.formacion.bajada }}</p>
       </div>
-      <a class="enlace-flecha encabezado__accion" href="/formacion/"><span>Ver toda la formación</span>{{ dib("flecha") }}</a>
+      <a class="enlace-flecha encabezado__accion" href="{{ '/formacion/' | url }}"><span>Ver toda la formación</span>{{ dib("flecha") }}</a>
     </header>
     {%- set lista = contenido.formacion | selectattr("destacado") %}
     {%- if not lista.length %}{% set lista = contenido.formacion %}{% endif %}
@@ -100,7 +100,7 @@ esInicio: true
         <h2 class="encabezado__titulo" id="materiales-titulo">{{ sec.materiales.titulo }}</h2>
         <p class="encabezado__bajada">{{ sec.materiales.bajada }}</p>
       </div>
-      <a class="enlace-flecha encabezado__accion" href="/materiales/"><span>Ver materiales</span>{{ dib("flecha") }}</a>
+      <a class="enlace-flecha encabezado__accion" href="{{ '/materiales/' | url }}"><span>Ver materiales</span>{{ dib("flecha") }}</a>
     </header>
     {%- set lista = contenido.materiales | selectattr("destacado") %}
     {%- if not lista.length %}{% set lista = contenido.materiales %}{% endif %}
@@ -123,14 +123,14 @@ esInicio: true
         <h2 class="encabezado__titulo" id="experiencias-titulo">{{ sec.experiencias.titulo }}</h2>
         <p class="encabezado__bajada">{{ sec.experiencias.bajada }}</p>
       </div>
-      <a class="enlace-flecha encabezado__accion" href="/experiencias/"><span>Todas las experiencias</span>{{ dib("flecha") }}</a>
+      <a class="enlace-flecha encabezado__accion" href="{{ '/experiencias/' | url }}"><span>Todas las experiencias</span>{{ dib("flecha") }}</a>
     </header>
     {%- set e = (contenido.experiencias | selectattr("destacado") | first) or (contenido.experiencias | first) %}
     {%- if e %}
     <article class="experiencia-destacada">
       <div class="experiencia-destacada__visual marco marco--claro">
         {%- if e.imagen %}
-        <img src="{{ e.imagen }}" alt="{{ e.imagen_alt }}" loading="lazy">
+        <img src="{{ e.imagen | url }}" alt="{{ e.imagen_alt }}" loading="lazy">
         {%- else %}
         {%- set pal = e.titulo.split(", ") %}
         <div class="tres-palabras" aria-hidden="true">
@@ -147,7 +147,7 @@ esInicio: true
         <p class="experiencia-destacada__desc">{{ e.descripcion }}</p>
         <div class="experiencia-destacada__acciones">
           {{ boton(e.accion, "boton--claro") }}
-          <a class="enlace-flecha" href="{{ e.url }}"><span>Más información</span>{{ dib("flecha") }}</a>
+          <a class="enlace-flecha" href="{{ e.url | url }}"><span>Más información</span>{{ dib("flecha") }}</a>
         </div>
       </div>
     </article>
@@ -169,7 +169,7 @@ esInicio: true
     </header>
     <nav class="subcats" aria-label="Tipos de publicación">
       {%- for clave, def in contenido.tiposPublicacion %}
-      <a class="subcat" href="{{ def.ruta }}"><span class="subcat__nombre">{{ def.plural }}</span><span class="subcat__num">{{ contenido.publicacionesPorTipo[clave].length }}</span></a>
+      <a class="subcat" href="{{ def.ruta | url }}"><span class="subcat__nombre">{{ def.plural }}</span><span class="subcat__num">{{ contenido.publicacionesPorTipo[clave].length }}</span></a>
       {%- endfor %}
     </nav>
     {%- if contenido.publicaciones.length %}
@@ -181,7 +181,7 @@ esInicio: true
     {%- else %}
     {{ vacio("Estamos incorporando nuestra producción científica.", "Libros, capítulos y artículos se van a publicar en esta sección a medida que los carguemos.", "area-publicaciones") }}
     {%- endif %}
-    <p class="mt-3"><a class="boton boton--contorno" href="/publicaciones/">Ver todas las publicaciones</a></p>
+    <p class="mt-3"><a class="boton boton--contorno" href="{{ '/publicaciones/' | url }}">Ver todas las publicaciones</a></p>
   </div>
 </section>
 
@@ -192,7 +192,7 @@ esInicio: true
       <span class="encabezado__num" aria-hidden="true" style="display:inline-block;margin-bottom:1rem">05</span>
       <h2 class="encabezado__titulo" id="recursos-titulo">{{ sec.recursos.titulo }}</h2>
       <p class="encabezado__bajada">{{ sec.recursos.bajada }}</p>
-      <p class="mt-2"><a class="enlace-flecha" href="/recursos-gratuitos/"><span>Ir a recursos gratuitos</span>{{ dib("flecha") }}</a></p>
+      <p class="mt-2"><a class="enlace-flecha" href="{{ '/recursos-gratuitos/' | url }}"><span>Ir a recursos gratuitos</span>{{ dib("flecha") }}</a></p>
     </header>
     <div>
       {%- set gratis = contenido.recursos %}
@@ -216,8 +216,8 @@ esInicio: true
     <div>
       <p class="lead">{{ h.quienes_texto }}</p>
       <div class="fila-acciones mt-2">
-        <a class="boton" href="/quienes-somos/">Conocernos</a>
-        <a class="enlace-flecha" href="/quienes-somos/proyectos/"><span>Proyectos</span>{{ dib("flecha") }}</a>
+        <a class="boton" href="{{ '/quienes-somos/' | url }}">Conocernos</a>
+        <a class="enlace-flecha" href="{{ '/quienes-somos/proyectos/' | url }}"><span>Proyectos</span>{{ dib("flecha") }}</a>
       </div>
     </div>
   </div>

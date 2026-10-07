@@ -1,7 +1,7 @@
 {%- set tituloPagina = (titulo + " · " + sitio.nombre) if (titulo and not esInicio) else sitio.titulo_seo -%}
 {%- set descPagina = (descripcion | sinHtml | recortar(158)) if descripcion else sitio.descripcion_seo -%}
-{%- set imagenOg = (imagen or sitio.imagen_og) | abs(sitio.url) -%}
-{%- set canonica = sitio.url + page.url -%}
+{%- set imagenOg = (imagen or sitio.imagen_og) | url | abs(sitio.url) -%}
+{%- set canonica = sitio.url + (page.url | url) -%}
 <!doctype html>
 <html lang="es">
 <head>
@@ -20,12 +20,12 @@
   <meta property="og:locale" content="es_AR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#F7F4EC">
-  <link rel="icon" href="{{ sitio.favicon or '/favicon.svg' }}" type="image/svg+xml">
-  <link rel="icon" href="/assets/img/marca/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="/assets/img/marca/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/outfit-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="icon" href="{{ (sitio.favicon or '/favicon.svg') | url }}" type="image/svg+xml">
+  <link rel="icon" href="{{ '/assets/img/marca/favicon-32.png' | url }}" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="{{ '/assets/img/marca/apple-touch-icon.png' | url }}">
+  <link rel="preload" href="{{ '/assets/fonts/outfit-latin-800-normal.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/assets/fonts/outfit-latin-400-normal.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | url }}">
   {%- if esInicio %}
   <script type="application/ld+json">{{ {
     "@context": "https://schema.org",
@@ -50,7 +50,7 @@
     {{ content | safe }}
   </main>
   {% include "partes/pie.njk" %}
-  <script src="/assets/js/main.js" defer></script>
-  {% if scripts %}{% for s in scripts %}<script src="{{ s }}" defer></script>{% endfor %}{% endif %}
+  <script src="{{ '/assets/js/main.js' | url }}" defer></script>
+  {% if scripts %}{% for s in scripts %}<script src="{{ s | url }}" defer></script>{% endfor %}{% endif %}
 </body>
 </html>

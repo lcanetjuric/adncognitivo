@@ -1,0 +1,72 @@
+name: Publicar copia en la TAC
+
+# Sincroniza una copia estática de este sitio (con pathPrefix /adncognitivo/)
+# dentro de var/www/html/adncognitivo/ en gercho25/ConicetTAC — pero nunca
+# directo a master (esa rama gobierna el deploy real de TODA la TAC, no solo
+# de esto). En vez de eso, abre/actualiza un PR desde la rama sync/adncognitivo,
+# para que alguien lo revise y mergee a mano. Ese PR además pasa por el chequeo
+# de check-adncognitivo-scope.yml (repo ConicetTAC), que bloquea el merge si el
+# diff toca algo fuera de las carpetas de adncognitivo.
+#
+# Netlify sigue siendo el único lugar donde se edita (CMS, login con GitHub);
+# este workflow no lo toca. Ver DEPLOY-TAC.md para el contexto completo.
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout adncognitivo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar con el prefijo de la TAC
+        run: npx eleventy --pathprefix=/adncognitivo/
+
+      - name: Excluir el panel del CMS de la copia pública
+        run: rm -rf _site/admin
+
+      - name: Checkout ConicetTAC
+        uses: actions/checkout@v4
+        with:
+          repository: gercho25/ConicetTAC
+          ref: master
+          token: ${{ secrets.TAC_PUSH_TOKEN }}
+          path: ConicetTAC
+
+      - name: Reemplazar la copia sincronizada
+        run: |
+          rm -rf ConicetTAC/var/www/html/adncognitivo
+          mkdir -p ConicetTAC/var/www/html/adncognitivo
+          cp -r _site/. ConicetTAC/var/www/html/adncognitivo/
+
+      - name: Abrir o actualizar el PR hacia master
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.TAC_PUSH_TOKEN }}
+          path: ConicetTAC
+          branch: sync/adncognitivo
+          base: master
+          commit-message: "Sincroniza copia de adncognitivo (${{ github.sha }})"
+          title: "Sincroniza adncognitivo"
+          body: |
+            PR automático del sync de contenido de adncognitivo.
+            Origen: adncognitivo@${{ github.sha }}
+
+            Solo debería tocar `var/www/html/adncognitivo/`. El chequeo de
+            check-adncognitivo-scope.yml lo valida antes de poder mergear.
+          committer: "adncognitivo-sync-bot <adncognitivo-sync-bot@users.noreply.github.com>"
+          author: "adncognitivo-sync-bot <adncognitivo-sync-bot@users.noreply.github.com>"
+          delete-branch: true
+          add-paths: |
+            var/www/html/adncognitivo/**

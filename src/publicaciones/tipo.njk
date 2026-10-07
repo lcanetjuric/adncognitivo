@@ -22,6 +22,6 @@ eleventyComputed:
     {%- else %}
     {{ vacio("Todavía no hay " + (def.plural | lower) + " cargados.", "Se van a listar acá a medida que se incorporen.", "area-publicaciones") }}
     {%- endif %}
-    <p class="mt-3"><a class="boton boton--contorno" href="/publicaciones/">Ver todas las publicaciones</a></p>
+    <p class="mt-3"><a class="boton boton--contorno" href="{{ '/publicaciones/' | url }}">Ver todas las publicaciones</a></p>
   </div>
 </section>

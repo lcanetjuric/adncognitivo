@@ -10,7 +10,7 @@ scripts: ["/assets/js/buscar.js"]
 {% include "partes/cabeza.njk" %}
 <section class="seccion" style="padding-top:clamp(3rem,6vw,5rem)">
   <div class="contenedor">
-    <form class="buscador" role="search" action="/buscar/" method="get" data-buscador>
+    <form class="buscador" role="search" action="{{ '/buscar/' | url }}" method="get" data-buscador>
       <div class="buscador__campo">
         <label class="visualmente-oculto" for="q">Qué querés buscar</label>
         {{ dib("buscar", "buscador__lupa") }}
