@@ -6,7 +6,7 @@
 
 Quien administra el contenido entra a `https://adncognitivo.netlify.app/admin/` con el mismo login de GitHub de siempre. El CMS guarda en la rama `main`. Netlify compila con `eleventy`, sin `--pathprefix`, así que el sitio de Netlify se ve igual que antes.
 
-Ese push a `main` también dispara el Action, que compila de nuevo con `--pathprefix=/adncognitivo/` y reemplaza la rama `deploy`. Ferozo no se entera solo: hay que entrar al panel, Git, y apretar Desplegar en la entrada que apunta a la carpeta `public_html/adncognitivo` y a la rama `deploy`. Hasta que `lcanetjuric` cargue el webhook, ese clic es obligatorio. Si no se aprieta, `tac.com.ar/adncognitivo/` queda en la versión anterior.
+Ese push a `main` también dispara el Action, que compila de nuevo con `--pathprefix=/adncognitivo/` y suma un commit en la rama `deploy`, encima del anterior. Ferozo no se entera solo: hay que entrar al panel, Git, y apretar Desplegar en la entrada que apunta a la carpeta `public_html/adncognitivo` y a la rama `deploy`. Ese botón hace un pull y, como el commit nuevo sigue la historia anterior, el pull entra. Hasta que `lcanetjuric` cargue el webhook, ese clic es obligatorio. Si no se aprieta, `tac.com.ar/adncognitivo/` queda en la versión anterior.
 
 El formulario de inscripción ya no usa Netlify Forms. Envía a `/adncognitivo-api/inscripcion.php`, que solo existe en `tac.com.ar`. Probar una inscripción en `adncognitivo.netlify.app` no funciona. Editar cursos, textos e imágenes no pasa por ese formulario.
 

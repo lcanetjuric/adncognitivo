@@ -5,8 +5,9 @@ name: Publicar copia en la TAC
 # var/www/html. Ferozo tiene que clonar esa rama en una carpeta vacía
 # public_html/adncognitivo, no en public_html entero.
 #
-# Cada push reemplaza la rama deploy. No toca main ni master de ConicetTAC.
-# Netlify sigue siendo donde se edita. Ver DEPLOY-TAC.md.
+# Cada push suma un commit en la rama deploy, encima del anterior, para que
+# el botón Desplegar de Ferozo pueda hacer pull. No toca main ni master de
+# ConicetTAC. Netlify sigue siendo donde se edita. Ver DEPLOY-TAC.md.
 
 on:
   push:
@@ -40,8 +41,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd _site
-          git init -b deploy
+          set -euo pipefail
+          rm -rf /tmp/deploy-publicacion
+          git clone --branch deploy --single-branch --depth 1 \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" \
+            /tmp/deploy-publicacion
+          find /tmp/deploy-publicacion -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a _site/. /tmp/deploy-publicacion/
+          cd /tmp/deploy-publicacion
           git add -A
-          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Sitio compilado para tac.com.ar/adncognitivo (${{ github.sha }})"
-          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" HEAD:deploy
+          if git diff --cached --quiet; then
+            echo "La rama deploy ya tiene este sitio."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -m "Sitio compilado para tac.com.ar/adncognitivo (${{ github.sha }})"
+          git push origin HEAD:deploy
